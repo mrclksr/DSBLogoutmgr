@@ -1,0 +1,76 @@
+.Dd $Mdocdate$
+.Dt dsblogoutmgr 1
+.Os
+.Sh ABOUT
+.Nm dsblogoutmgr
+is a Qt utility that allows you to leave your current window manager-session,
+reboot, suspend or shutdown your system. Furthermore, it supports
+time-controlled shutdown.
+.Sh INSTALLATION
+.Bd -literal
+# git clone https://github.com/mrclksr/dsblogoutmgr
+# cd dsblogoutmgr && qmake && make && make install
+.Ed
+.Sh USAGE
+.Nm
+.Op Fl l Ar <logout command>
+.Op Fl r Ar <reboot command>
+.Op Fl s Ar <shutdown command>
+.Op Fl S Ar <suspend command>
+.Sh OPTIONS
+.Bl -tag -width indent
+.It Fl l
+Defines the logout command. Default
+.Em Dq fluxbox exit
+.It Fl r
+Defines the reboot command. Default
+.Em Dq shutdown -r now
+.It Fl s
+Defines the shutdown command. Default
+.Em Dq shutdown -p now
+.It Fl S
+Defines the suspend command. Default
+.Em Dq acpiconf -s 3
+
+.Sh SETUP
+Commands for the actions can also be defined in
+.Em ~/.config/DSB/dsblogoutmgr/config
+using variable=value pairs by setting the variables
+.Em logout , shutdown , reboot ,
+and
+.Em suspend .
+Commands containing white spaces must be enclosed in double
+quotes. If an action is defined on the command line, it is used instead
+of the one defined in
+.Em ~/.config/DSB/dsblogoutmgr/config .
+.Ss Permissions
+In order to be able to execute
+.Em shutdown
+as regular user, you have to be member of the
+.Em operator
+group:
+.Bd -literal
+# pw groupmod operator -m yourusername
+.Ed
+
+If you want to be able to suspend your system as
+regular user, you can use
+.Xr sudo 8 .
+Add
+.Bd -literal
+%wheel  ALL=(ALL) NOPASSWD: /usr/sbin/acpiconf *
+.Ed
+
+to
+.Em /usr/loca/etc/sudoers ,
+and define the suspend action accordingly by using
+the
+.Fl S 
+flag on the command line, or set
+.Bd -literal
+suspend = "sudo acpiconf -s 3"
+.Ed
+
+in
+.Em ~/.config/DSB/dsblogoutmgr/config
+
