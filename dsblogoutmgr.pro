@@ -18,7 +18,7 @@ DEFINES     += PROGRAM=\\\"$${PROGRAM}\\\" LOCALE_PATH=\\\"$${DATADIR}\\\"
 DEFINES	    += PATH_LOCK=\\\"$${PATH_LOCK}\\\"
 INSTALLS     = target locales
 QMAKE_POST_LINK = $(STRIP) $(TARGET)
-QMAKE_EXTRA_TARGETS += distclean cleanqm
+QMAKE_EXTRA_TARGETS += distclean cleanqm readme
 
 HEADERS	    += lib/config.h \
 	       src/bgwin.h \
@@ -40,6 +40,13 @@ locales.path = $${DATADIR}
 
 target.path  = $${PREFIX}/bin
 target.files = $${PROGRAM}
+
+readme.target = readme
+readme.files = readme.mdoc
+readme.commands = mandoc -mdoc readme.mdoc | perl -e \'foreach (<STDIN>) { \
+		\$$_ =~ s/(.)\x08\1/\$$1/g; \$$_ =~ s/_\x08(.)/\$$1/g; \
+		print \$$_ \
+	}\' | sed '1,1d' > README
 
 qtPrepareTool(LRELEASE, lrelease)
 for(a, LANGUAGES) {
