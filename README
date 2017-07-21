@@ -1,0 +1,52 @@
+
+ABOUT
+     dsblogoutmgr is a Qt utility that allows you to leave your current window
+     manager-session, reboot, suspend or shutdown your system. Furthermore, it
+     supports time-controlled shutdown.
+
+INSTALLATION
+     # git clone https://github.com/mrclksr/dsblogoutmgr
+     # cd dsblogoutmgr && qmake && make && make install
+
+USAGE
+     dsblogoutmgr [-l <logout command>] [-r <reboot command>] [-s <shutdown
+     command>] [-S <suspend command>]
+
+OPTIONS
+     -l      Defines the logout command. Default “fluxbox exit”
+
+     -r      Defines the reboot command. Default “shutdown -r now”
+
+     -s      Defines the shutdown command. Default “shutdown -p now”
+
+     -S      Defines the suspend command. Default “acpiconf -s 3”
+
+
+SETUP
+     Commands for the actions can also be defined in
+     ~/.config/DSB/dsblogoutmgr/config using variable=value pairs by setting
+     the variables logout, shutdown, reboot, and suspend.  Commands containing
+     white spaces must be enclosed in double quotes. If an action is defined
+     on the command line, it is used instead of the one defined in
+     ~/.config/DSB/dsblogoutmgr/config.
+
+   Permissions
+     In order to be able to execute shutdown as regular user, you have to be
+     member of the operator group:
+
+     # pw groupmod operator -m yourusername
+
+     If you want to be able to suspend your system as regular user, you can
+     use sudo(8).  Add
+
+     %wheel  ALL=(ALL) NOPASSWD: /usr/sbin/acpiconf *
+
+     to /usr/loca/etc/sudoers, and define the suspend action accordingly by
+     using the -S flag on the command line, or set
+
+     suspend = "sudo acpiconf -s 3"
+
+     in ~/.config/DSB/dsblogoutmgr/config
+
+
+FreeBSD 11.1-PRERELEASE          July 21, 2017         FreeBSD 11.1-PRERELEASE
