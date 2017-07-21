@@ -44,7 +44,7 @@
 #include "dsbcfg/dsbcfg.h"
 
 static void usage(void);
-static void execmd(const char *cmd);
+static void execmd(const char *cmd, QWidget *bgwin);
 
 int
 main(int argc, char *argv[])
@@ -110,22 +110,22 @@ main(int argc, char *argv[])
 			usage();
 		}
 	}
-	BgWin *bg  = new BgWin();
-	Mainwin *w = new Mainwin(bg);
+	BgWin   *bg = new BgWin();
+	Mainwin *w  = new Mainwin(bg);
 
 	while (w->exec() == QDialog::Accepted) {
 		switch (w->getButton()) {
 		case LOGOUT:
-			execmd(cmds[LOGOUT]);
+			execmd(cmds[LOGOUT], bg);
 			break;
 		case SHUTDOWN:
-			execmd(cmds[SHUTDOWN]);
+			execmd(cmds[SHUTDOWN], bg);
 			break;
 		case SUSPEND:
-			execmd(cmds[SUSPEND]);
+			execmd(cmds[SUSPEND], bg);
 			break;
 		case REBOOT:
-			execmd(cmds[REBOOT]);
+			execmd(cmds[REBOOT], bg);
 			break;
 		case TIMER:
 			Timerwin *tw = new Timerwin(bg);
@@ -135,7 +135,7 @@ main(int argc, char *argv[])
 				    tw->getMinutes());
 				app.exec();
 				if (c->shutdown())
-					execmd(cmds[SHUTDOWN]);
+					execmd(cmds[SHUTDOWN], 0);
 				return (EXIT_SUCCESS);
 			}
 			delete(tw);
@@ -146,15 +146,15 @@ main(int argc, char *argv[])
 }
 
 static void
-execmd(const char *cmd)
+execmd(const char *cmd, QWidget *bgwin)
 {
 	switch (system(cmd)) {
 	case -1:
-		qh_err(0, EXIT_FAILURE, "system(%s)", cmd);
+		qh_err(bgwin, EXIT_FAILURE, "system(%s)", cmd);
 	case  0:
 		exit(EXIT_SUCCESS);
 	default:
-		qh_errx(0, EXIT_FAILURE, "Couldn't execute \"%s\"", cmd);
+		qh_errx(bgwin, EXIT_FAILURE, "Couldn't execute \"%s\"", cmd);
 	}
 }
 
