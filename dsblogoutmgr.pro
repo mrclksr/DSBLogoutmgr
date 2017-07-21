@@ -41,9 +41,6 @@ locales.path = $${DATADIR}
 target.path  = $${PREFIX}/bin
 target.files = $${PROGRAM}
 
-cleanqm.commands  = rm -f $${locales.files}
-distclean.depends = cleanqm
-
 qtPrepareTool(LRELEASE, lrelease)
 for(a, LANGUAGES) {
 	in = locale/$${PROGRAM}_$${a}.ts
@@ -52,4 +49,7 @@ for(a, LANGUAGES) {
 	cmd = $$LRELEASE $$in -qm $$out
 	system($$cmd)
 }
+
+cleanqm.commands  = rm -f $${locales.files}
+distclean.depends = cleanqm
 
