@@ -113,12 +113,12 @@
     <message>
         <location filename="src/timerwin.cpp" line="24"/>
         <source> Hours</source>
-        <translation>Stunden</translation>
+        <translation> Stunden</translation>
     </message>
     <message>
         <location filename="src/timerwin.cpp" line="25"/>
         <source> Minutes</source>
-        <translation>Minuten</translation>
+        <translation> Minuten</translation>
     </message>
 </context>
 </TS>
