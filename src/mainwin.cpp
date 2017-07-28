@@ -29,7 +29,8 @@
 Mainwin::Mainwin(QWidget *parent) : QDialog(parent)
 {
 	QIcon pic	    = qh_loadIcon("system-shutdown", NULL);
-	QIcon icon_timer    = qh_loadIcon("timer", "time", "clock", NULL);
+	QIcon icon_timer    = qh_loadIcon("alarm-symbolic", "appointment-soon",
+					  "timer", "clock", NULL);
 	QIcon icon_logout   = qh_loadIcon("system-log-out", NULL);
 	QIcon icon_reboot   = qh_loadIcon("system-reboot", NULL);
 	QIcon icon_shutdown = qh_loadIcon("system-shutdown", NULL);
