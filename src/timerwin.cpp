@@ -27,7 +27,8 @@
 
 Timerwin::Timerwin(QWidget *parent) : QDialog(parent)
 {
-	QIcon pic      = qh_loadIcon("timer", "clock", NULL);
+	QIcon pic      = qh_loadIcon("alarm-symbolic", "appointment-soon",
+				     "timer", "clock", NULL);
 	QIcon okIcon   = qh_loadStockIcon(QStyle::SP_DialogOkButton, NULL);
 	QIcon cnclIcon = qh_loadStockIcon(QStyle::SP_DialogCancelButton, NULL);
 

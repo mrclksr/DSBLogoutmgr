@@ -36,7 +36,8 @@ Countdown::Countdown(int hours, int minutes, QWidget *parent)
 
 	QIcon cnclIcon = qh_loadStockIcon(QStyle::SP_DialogCancelButton, NULL);
 	QIcon okIcon   = qh_loadStockIcon(QStyle::SP_DialogOkButton, NULL);
-	QIcon pic      = qh_loadIcon("timer", "time", "clock", NULL);
+	QIcon pic      = qh_loadIcon("alarm-symbolic", "appointment-soon",
+				     "timer", "clock", NULL);
 	QIcon tIcon    = pic;
 
 	label		    = new QLabel("", this);
