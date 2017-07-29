@@ -16,7 +16,7 @@ PATH_LOCK    = .$${PROGRAM}.lock
 INCLUDEPATH += . lib
 DEFINES     += PROGRAM=\\\"$${PROGRAM}\\\" LOCALE_PATH=\\\"$${DATADIR}\\\"
 DEFINES	    += PATH_LOCK=\\\"$${PATH_LOCK}\\\"
-INSTALLS     = target locales
+INSTALLS     = target locales man
 QMAKE_POST_LINK = $(STRIP) $(TARGET)
 QMAKE_EXTRA_TARGETS += distclean cleanqm readme
 
@@ -47,6 +47,9 @@ readme.commands = mandoc -mdoc readme.mdoc | perl -e \'foreach (<STDIN>) { \
 		\$$_ =~ s/(.)\x08\1/\$$1/g; \$$_ =~ s/_\x08(.)/\$$1/g; \
 		print \$$_ \
 	}\' | sed '1,1d' > README
+
+man.path  = $${PREFIX}/man/man1
+man.files = $${PROGRAM}.1
 
 qtPrepareTool(LRELEASE, lrelease)
 for(a, LANGUAGES) {
