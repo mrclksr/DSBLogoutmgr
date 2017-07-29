@@ -1,0 +1,106 @@
+.Dd $Mdocdate$
+.Dt DSBLogoutmgr 1
+.Os
+.Sh NAME
+.Nm dsblogoutmgr
+.Nd Graphical logout manager
+.Sh SYNOPSIS
+.Nm
+.Op Fl l Ar <logout command>
+.Op Fl r Ar <reboot command>
+.Op Fl s Ar <shutdown command>
+.Op Fl S Ar <suspend command>
+.Sh DESCRIPTION
+.Nm
+is a Qt utility that allows you to leave your current window manager-session,
+reboot, suspend or shutdown your system. Furthermore, it supports
+time-controlled shutdown.
+
+The following options are available:
+.Bl -tag -width indent
+.It Fl l
+Defines the logout command. Default
+.Em Qq fluxbox exit
+.It Fl r
+Defines the reboot command. Default
+.Em Qq shutdown -r now
+.It Fl s
+Defines the shutdown command. Default
+.Em Qq shutdown -p now
+.It Fl S
+Defines the suspend command. Default
+.Em Qq acpiconf -s 3
+.Sh SETUP
+Commands for the actions can also be defined in
+.Em ~/.config/DSB/dsblogoutmgr/config
+using variable=value pairs by setting the variables
+.Em logout , shutdown , reboot ,
+and
+.Em suspend .
+Commands containing white spaces must be enclosed in double
+quotes. If an action is defined on the command line, it is used instead
+of the one defined in
+.Em ~/.config/DSB/dsblogoutmgr/config .
+.Ss Permissions
+In order to be able to execute
+.Em shutdown
+as regular user, you can either use
+.Xr sudo 8 (see below), or you can add your username to the
+.Em operator
+group:
+.Bd -literal -offset indent
+# pw groupmod operator -m yourusername
+.Ed
+
+If you want to be able to suspend your system as
+regular user, you can use
+.Xr sudo 8 .
+Add
+.Bd -literal -offset indent
+%wheel  ALL=(ALL) NOPASSWD: /usr/sbin/acpiconf *
+.Ed
+
+to
+.Em /usr/local/etc/sudoers ,
+and define the suspend action accordingly by using
+the
+.Fl S 
+flag on the command line, or set
+.Bd -literal -offset indent
+suspend = "sudo acpiconf -s 3"
+.Ed
+
+in
+.Em ~/.config/DSB/dsblogoutmgr/config
+.Ss Closing window manager-sessions
+.Pp
+.Bl -tag
+.It Sy Openbox
+Users of
+.Em OpenBox
+can set the
+.Ar logout
+action to
+.Em Qq openbox --exit
+using the
+.Fl l
+flag.
+.El
+.Bl -tag
+.It Sy Fluxbox
+Users of
+.Em Fluxbox
+can set the
+.Ar logout
+action to
+.Em Qq fluxbox-remote exit
+using the
+.Fl l
+flag. This requires
+.Bd -literal -offset indent
+session.screen0.allowRemoteActions: true
+.Ed
+
+to be set in
+.Em ~/.fluxbox/init .
+.El
