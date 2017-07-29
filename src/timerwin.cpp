@@ -21,7 +21,8 @@
  * (INCLUDING NEGLIGENCE OR OTHERWISE) ARISING IN ANY WAY OUT OF THE USE OF
  * THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
  */
-
+#include <QStyle>
+#include <QDesktopWidget>
 #include "timerwin.h"
 #include "qt-helper/qt-helper.h"
 
@@ -72,7 +73,10 @@ Timerwin::Timerwin(QWidget *parent) : QDialog(parent)
 	connect(cancel, SIGNAL(clicked()), this, SLOT(reject()));
 	connect(minSb, SIGNAL(valueChanged(int)), this, SLOT(checkValue(int)));
 
+	show();
 	setWindowFlags(Qt::Dialog | Qt::FramelessWindowHint);
+	setGeometry(QStyle::alignedRect(Qt::LeftToRight, Qt::AlignCenter,
+	    size(), qApp->desktop()->availableGeometry()));
 }
 
 void Timerwin::setTimer()

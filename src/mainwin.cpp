@@ -21,7 +21,8 @@
  * (INCLUDING NEGLIGENCE OR OTHERWISE) ARISING IN ANY WAY OUT OF THE USE OF
  * THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
  */
-
+#include <QStyle>
+#include <QDesktopWidget>
 #include "mainwin.h"
 #include "bgwin.h"
 #include "qt-helper/qt-helper.h"
@@ -81,7 +82,10 @@ Mainwin::Mainwin(QWidget *parent) : QDialog(parent)
 	connect(pb_suspend,  SIGNAL(clicked()), this, SLOT(suspendClicked()));
 	connect(pb_cancel,   SIGNAL(clicked()), this, SLOT(reject()));
 
+	show();
 	setWindowFlags(Qt::Dialog | Qt::FramelessWindowHint);
+	setGeometry(QStyle::alignedRect(Qt::LeftToRight, Qt::AlignCenter,
+	    size(), qApp->desktop()->availableGeometry()));
 }
 
 void Mainwin::logoutClicked()

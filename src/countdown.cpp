@@ -23,6 +23,8 @@
  */
 
 #include <QTimer>
+#include <QStyle>
+#include <QDesktopWidget>
 #include "countdown.h"
 #include "qt-helper/qt-helper.h"
 
@@ -81,6 +83,8 @@ Countdown::Countdown(int hours, int minutes, QWidget *parent)
 		timer->start(60000);
 	trayIcon->show();
 	show();
+	setGeometry(QStyle::alignedRect(Qt::LeftToRight, Qt::AlignCenter,
+	    size(), qApp->desktop()->availableGeometry()));
 }
 
 void Countdown::setLabelText(int hours, int minutes, int seconds)
