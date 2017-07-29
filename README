@@ -13,14 +13,13 @@ USAGE
      command>] [-S <suspend command>]
 
 OPTIONS
-     -l      Defines the logout command. Default “fluxbox exit”
+     -l      Defines the logout command. Default "fluxbox exit"
 
-     -r      Defines the reboot command. Default “shutdown -r now”
+     -r      Defines the reboot command. Default "shutdown -r now"
 
-     -s      Defines the shutdown command. Default “shutdown -p now”
+     -s      Defines the shutdown command. Default "shutdown -p now"
 
-     -S      Defines the suspend command. Default “acpiconf -s 3”
-
+     -S      Defines the suspend command. Default "acpiconf -s 3"
 
 SETUP
      Commands for the actions can also be defined in
@@ -31,22 +30,35 @@ SETUP
      ~/.config/DSB/dsblogoutmgr/config.
 
    Permissions
-     In order to be able to execute shutdown as regular user, you have to be
-     member of the operator group:
+     In order to be able to execute shutdown as regular user, you can either
+     use sudo(8) (see below), or you can add your username to the operator
+     group:
 
-     # pw groupmod operator -m yourusername
+           # pw groupmod operator -m yourusername
 
      If you want to be able to suspend your system as regular user, you can
      use sudo(8).  Add
 
-     %wheel  ALL=(ALL) NOPASSWD: /usr/sbin/acpiconf *
+           %wheel  ALL=(ALL) NOPASSWD: /usr/sbin/acpiconf *
 
-     to /usr/loca/etc/sudoers, and define the suspend action accordingly by
+     to /usr/local/etc/sudoers, and define the suspend action accordingly by
      using the -S flag on the command line, or set
 
-     suspend = "sudo acpiconf -s 3"
+           suspend = "sudo acpiconf -s 3"
 
      in ~/.config/DSB/dsblogoutmgr/config
 
+   Closing window manager-sessions
+     Openbox
+             Users of OpenBox can set the logout action to "openbox --exit"
+             using the -l flag.
 
-FreeBSD 11.1-PRERELEASE          July 21, 2017         FreeBSD 11.1-PRERELEASE
+     Fluxbox
+             Users of Fluxbox can set the logout action to "fluxbox-remote
+             exit" using the -l flag. This requires
+
+                   session.screen0.allowRemoteActions: true
+
+             to be set in ~/.fluxbox/init.
+
+
