@@ -72,9 +72,9 @@ Timerwin::Timerwin(QWidget *parent) : QDialog(parent)
 	connect(ok, SIGNAL(clicked()), this, SLOT(setTimer()));
 	connect(cancel, SIGNAL(clicked()), this, SLOT(reject()));
 	connect(minSb, SIGNAL(valueChanged(int)), this, SLOT(checkValue(int)));
-
+	setModal(true);
+	setWindowFlags(windowFlags() | Qt::FramelessWindowHint);
 	show();
-	setWindowFlags(Qt::Dialog | Qt::FramelessWindowHint);
 	setGeometry(QStyle::alignedRect(Qt::LeftToRight, Qt::AlignCenter,
 	    size(), qApp->desktop()->availableGeometry()));
 }
