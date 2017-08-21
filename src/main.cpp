@@ -148,14 +148,14 @@ main(int argc, char *argv[])
 static void
 execmd(const char *cmd, QWidget *bgwin)
 {
-	switch (system(cmd)) {
-	case -1:
+	int error;
+
+	if ((error = system(cmd)) == -1)
 		qh_err(bgwin, EXIT_FAILURE, "system(%s)", cmd);
-	case  0:
+	else if (error == 0)
 		exit(EXIT_SUCCESS);
-	default:
-		qh_errx(bgwin, EXIT_FAILURE, "Couldn't execute \"%s\"", cmd);
-	}
+	qh_errx(bgwin, EXIT_FAILURE, "Command '%s' exited with code %d",
+	    cmd, error);
 }
 
 static void
