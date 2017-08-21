@@ -155,7 +155,7 @@ execmd(const char *cmd, QWidget *bgwin)
 	else if (error == 0)
 		exit(EXIT_SUCCESS);
 	qh_errx(bgwin, EXIT_FAILURE, "Command '%s' exited with code %d",
-	    cmd, error);
+	    cmd, (error >> 8));
 }
 
 static void
