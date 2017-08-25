@@ -22,6 +22,7 @@ QMAKE_EXTRA_TARGETS += distclean cleanqm readme
 
 HEADERS	    += lib/config.h \
 	       src/bgwin.h \
+	       src/icons.h \
 	       src/mainwin.h \
 	       src/timerwin.h \
 	       src/countdown.h \

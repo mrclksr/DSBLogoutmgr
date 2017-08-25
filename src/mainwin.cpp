@@ -23,34 +23,34 @@
  */
 #include <QStyle>
 #include <QDesktopWidget>
+
+#include "icons.h"
 #include "mainwin.h"
 #include "bgwin.h"
 #include "qt-helper/qt-helper.h"
 
 Mainwin::Mainwin(QWidget *parent) : QDialog(parent)
 {
-	QIcon pic	    = qh_loadIcon("system-shutdown", NULL);
-	QIcon icon_timer    = qh_loadIcon("alarm-symbolic", "appointment-soon",
-					  "timer", "clock", NULL);
-	QIcon icon_logout   = qh_loadIcon("system-log-out", NULL);
-	QIcon icon_reboot   = qh_loadIcon("system-reboot", NULL);
-	QIcon icon_shutdown = qh_loadIcon("system-shutdown", NULL);
-	QIcon icon_suspend  = qh_loadIcon("system-suspend", NULL);
+	QIcon pic	    = qh_loadIcon(ICONS_SHUTDOWN);
+	QIcon icon_logout   = qh_loadIcon(ICONS_LOGOUT);
+	QIcon icon_shutdown = qh_loadIcon(ICONS_SHUTDOWN);
+	QIcon icon_suspend  = qh_loadIcon(ICONS_SUSPEND);
+	QIcon icon_timer    = qh_loadIcon(ICONS_TIMER);
+	QIcon icon_reboot   = qh_loadIcon(ICONS_REBOOT);
 	QIcon icon_cancel   = qh_loadStockIcon(QStyle::SP_DialogCancelButton,
-	    NULL);
-
+					       NULL);
 	QLabel	    *icon	 = new QLabel();
 	QHBoxLayout *hbox	 = new QHBoxLayout();
 	QVBoxLayout *vbox	 = new QVBoxLayout();
 	QVBoxLayout *layout	 = new QVBoxLayout();
-	QPushButton *pb_timer	 = new QPushButton(icon_timer, tr("Timer"));
+	QPushButton *pb_timer	 = new QPushButton(icon_timer,  tr("Timer"));
 	QPushButton *pb_logout	 = new QPushButton(icon_logout, tr("Logout"));
 	QPushButton *pb_reboot	 = new QPushButton(icon_reboot,
-	    tr("Reboot system"));
+						   tr("Reboot system"));
 	QPushButton *pb_shutdown = new QPushButton(icon_shutdown,
-	    tr("Shutdown system"));
+						   tr("Shutdown system"));
 	QPushButton *pb_suspend  = new QPushButton(icon_suspend,
-	    tr("Suspend system"));
+						   tr("Suspend system"));
 	QPushButton *pb_cancel   = new QPushButton(icon_cancel, tr("Cancel"));
 
 	pb_timer->setStyleSheet("Text-align:left");
@@ -61,7 +61,7 @@ Mainwin::Mainwin(QWidget *parent) : QDialog(parent)
 	pb_cancel->setStyleSheet("Text-align:left");
 	pb_suspend->setStyleSheet("Text-align:left");
 
-	icon->setPixmap(pic.pixmap(pic.actualSize(QSize(96, 96))));
+	icon->setPixmap(pic.pixmap(96));
 	hbox->addWidget(icon);
 
 	vbox->addWidget(pb_logout);

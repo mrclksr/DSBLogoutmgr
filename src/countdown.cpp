@@ -25,6 +25,8 @@
 #include <QTimer>
 #include <QStyle>
 #include <QDesktopWidget>
+
+#include "icons.h"
 #include "countdown.h"
 #include "qt-helper/qt-helper.h"
 
@@ -38,8 +40,7 @@ Countdown::Countdown(int hours, int minutes, QWidget *parent)
 
 	QIcon cnclIcon = qh_loadStockIcon(QStyle::SP_DialogCancelButton, NULL);
 	QIcon okIcon   = qh_loadStockIcon(QStyle::SP_DialogOkButton, NULL);
-	QIcon pic      = qh_loadIcon("alarm-symbolic", "appointment-soon",
-				     "timer", "clock", NULL);
+	QIcon pic      = qh_loadIcon(ICONS_TIMER);
 	QIcon tIcon    = pic;
 
 	label		    = new QLabel("", this);

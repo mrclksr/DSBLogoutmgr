@@ -23,13 +23,14 @@
  */
 #include <QStyle>
 #include <QDesktopWidget>
+
+#include "icons.h"
 #include "timerwin.h"
 #include "qt-helper/qt-helper.h"
 
 Timerwin::Timerwin(QWidget *parent) : QDialog(parent)
 {
-	QIcon pic      = qh_loadIcon("alarm-symbolic", "appointment-soon",
-				     "timer", "clock", NULL);
+	QIcon pic      = qh_loadIcon(ICONS_TIMER);
 	QIcon okIcon   = qh_loadStockIcon(QStyle::SP_DialogOkButton, NULL);
 	QIcon cnclIcon = qh_loadStockIcon(QStyle::SP_DialogCancelButton, NULL);
 
