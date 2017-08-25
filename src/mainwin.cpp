@@ -39,10 +39,10 @@ Mainwin::Mainwin(QWidget *parent) : QDialog(parent)
 	QIcon icon_reboot   = qh_loadIcon(ICONS_REBOOT);
 	QIcon icon_cancel   = qh_loadStockIcon(QStyle::SP_DialogCancelButton,
 					       NULL);
-	QLabel	    *icon	 = new QLabel();
-	QHBoxLayout *hbox	 = new QHBoxLayout();
-	QVBoxLayout *vbox	 = new QVBoxLayout();
-	QVBoxLayout *layout	 = new QVBoxLayout();
+	QLabel	    *icon	 = new QLabel;
+	QHBoxLayout *hbox	 = new QHBoxLayout;
+	QVBoxLayout *vbox	 = new QVBoxLayout;
+	QVBoxLayout *layout	 = new QVBoxLayout(this);
 	QPushButton *pb_timer	 = new QPushButton(icon_timer,  tr("Timer"));
 	QPushButton *pb_logout	 = new QPushButton(icon_logout, tr("Logout"));
 	QPushButton *pb_reboot	 = new QPushButton(icon_reboot,
@@ -73,7 +73,6 @@ Mainwin::Mainwin(QWidget *parent) : QDialog(parent)
 	hbox->addSpacing(20);
 	hbox->addLayout(vbox);
 	layout->addLayout(hbox);
-	setLayout(layout);
 
 	connect(pb_timer,    SIGNAL(clicked()), this, SLOT(timerClicked()));
 	connect(pb_logout,   SIGNAL(clicked()), this, SLOT(logoutClicked()));

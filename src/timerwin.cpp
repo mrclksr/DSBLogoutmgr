@@ -34,20 +34,20 @@ Timerwin::Timerwin(QWidget *parent) : QDialog(parent)
 	QIcon okIcon   = qh_loadStockIcon(QStyle::SP_DialogOkButton, NULL);
 	QIcon cnclIcon = qh_loadStockIcon(QStyle::SP_DialogCancelButton, NULL);
 
-	hourSb		     = new QSpinBox(this);
-	minSb		     = new QSpinBox(this);
-	QLabel	    *icon    = new QLabel(this);
+	hourSb		     = new QSpinBox;
+	minSb		     = new QSpinBox;
+	QLabel	    *icon    = new QLabel;
 	QLabel	    *label   = new QLabel(QString(tr("Set shutdown time " \
-					  "in hours and/or minutes:")), this);
-	QHBoxLayout *hbox    = new QHBoxLayout();
-	QHBoxLayout *btHbox  = new QHBoxLayout();
-	QVBoxLayout *vbox    = new QVBoxLayout();
-	QHBoxLayout *hLayout = new QHBoxLayout();
-	QVBoxLayout *vLayout = new QVBoxLayout();
+					  "in hours and/or minutes:")));
+	QHBoxLayout *hbox    = new QHBoxLayout;
+	QHBoxLayout *btHbox  = new QHBoxLayout;
+	QVBoxLayout *vbox    = new QVBoxLayout;
+	QHBoxLayout *hLayout = new QHBoxLayout;
+	QVBoxLayout *vLayout = new QVBoxLayout(this);
 	QPushButton *ok	     = new QPushButton(okIcon, tr("&Ok"));
 	QPushButton *cancel  = new QPushButton(cnclIcon, tr("&Cancel"));
 
-	icon->setPixmap(pic.pixmap(pic.actualSize(QSize(96, 96))));
+	icon->setPixmap(pic.pixmap(96));
 	hourSb->setSuffix(tr(" Hours"));
 	minSb->setSuffix(tr(" Minutes"));
 	minSb->setMaximum(59);
@@ -68,7 +68,6 @@ Timerwin::Timerwin(QWidget *parent) : QDialog(parent)
 
 	vLayout->addLayout(hLayout);
 	vLayout->addLayout(btHbox);
-	setLayout(vLayout);
 
 	connect(ok, SIGNAL(clicked()), this, SLOT(setTimer()));
 	connect(cancel, SIGNAL(clicked()), this, SLOT(reject()));

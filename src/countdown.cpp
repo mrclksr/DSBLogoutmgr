@@ -43,20 +43,19 @@ Countdown::Countdown(int hours, int minutes, QWidget *parent)
 	QIcon pic      = qh_loadIcon(ICONS_TIMER);
 	QIcon tIcon    = pic;
 
-	label		    = new QLabel("", this);
+	label		    = new QLabel("");
 	timer		    = new QTimer(this);
 	trayIcon	    = new QSystemTrayIcon(tIcon, this);
-	QLabel	    *icon   = new QLabel();
-	QHBoxLayout *hbox   = new QHBoxLayout();
-	QHBoxLayout *btHbox = new QHBoxLayout();
-	QVBoxLayout *layout = new QVBoxLayout();
+	QLabel	    *icon   = new QLabel;
+	QHBoxLayout *hbox   = new QHBoxLayout;
+	QHBoxLayout *btHbox = new QHBoxLayout;
+	QVBoxLayout *layout = new QVBoxLayout(this);
 	QPushButton *cancel = new QPushButton(cnclIcon, tr("Cancel timer"));
 	QPushButton *ok	    = new QPushButton(okIcon, tr("Ok"));
 
 	setLabelText(hours, minutes);
 	trayIcon->setToolTip(label->text());
-
-	icon->setPixmap(pic.pixmap(pic.actualSize(QSize(72, 72))));
+	icon->setPixmap(pic.pixmap(72));
 	setWindowIcon(tIcon);
 
 	hbox->setSpacing(20);
@@ -69,7 +68,6 @@ Countdown::Countdown(int hours, int minutes, QWidget *parent)
 
 	layout->addLayout(hbox);
 	layout->addLayout(btHbox);
-	setLayout(layout);
 
 	connect(trayIcon,
 	    SIGNAL(activated(QSystemTrayIcon::ActivationReason)), this,
