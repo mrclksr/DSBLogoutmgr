@@ -7,9 +7,17 @@ is a Qt utility that allows you to leave your current window manager-session,
 reboot, suspend or shutdown your system. Furthermore, it supports
 time-controlled shutdown.
 .Sh INSTALLATION
+.Ss Dependencies
+.Nm
+depends on devel/qt5-buildtools, devel/qt5-core, devel/qt5-linguisttools,
+devel/qt5-qmake, x11-toolkits/qt5-gui, and x11-toolkits/qt5-widgets
+.Ss Building and installation
 .Bd -literal
 # git clone https://github.com/mrclksr/dsblogoutmgr
-# cd dsblogoutmgr && qmake && make && make install
+# git clone https://github.com/mrclksr/dsbcfg.git
+
+# cd dsblogoutmgr && qmake && make
+# make install
 .Ed
 .Sh USAGE
 .Nm
@@ -54,7 +62,7 @@ group:
 .Ed
 
 If you want to be able to suspend your system as
-regular user, you can use
+regular user who is member of the wheel group, you can use
 .Xr sudo 8 .
 Add
 .Bd -literal -offset indent
