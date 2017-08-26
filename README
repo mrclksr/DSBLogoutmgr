@@ -5,8 +5,17 @@ ABOUT
      supports time-controlled shutdown.
 
 INSTALLATION
+   Dependencies
+     dsblogoutmgr depends on devel/qt5-buildtools, devel/qt5-core,
+     devel/qt5-linguisttools, devel/qt5-qmake, x11-toolkits/qt5-gui, and
+     x11-toolkits/qt5-widgets
+
+   Building and installation
      # git clone https://github.com/mrclksr/dsblogoutmgr
-     # cd dsblogoutmgr && qmake && make && make install
+     # git clone https://github.com/mrclksr/dsbcfg.git
+
+     # cd dsblogoutmgr && qmake && make
+     # make install
 
 USAGE
      dsblogoutmgr [-l <logout command>] [-r <reboot command>] [-s <shutdown
@@ -36,8 +45,8 @@ SETUP
 
            # pw groupmod operator -m yourusername
 
-     If you want to be able to suspend your system as regular user, you can
-     use sudo(8).  Add
+     If you want to be able to suspend your system as regular user who is
+     member of the wheel group, you can use sudo(8).  Add
 
            %wheel  ALL=(ALL) NOPASSWD: /usr/sbin/acpiconf *
 
@@ -62,3 +71,4 @@ SETUP
              to be set in ~/.fluxbox/init.
 
 
+FreeBSD 11.1-STABLE             August 26, 2017            FreeBSD 11.1-STABLE
