@@ -41,7 +41,6 @@
 #include "countdown.h"
 #include "qt-helper/qt-helper.h"
 #include "config.h"
-#include "dsbcfg/dsbcfg.h"
 
 static void usage(void);
 static void execmd(const char *cmd, QWidget *bgwin);
