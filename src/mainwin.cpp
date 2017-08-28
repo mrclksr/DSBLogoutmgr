@@ -29,6 +29,8 @@
 #include "bgwin.h"
 #include "qt-helper/qt-helper.h"
 
+#define PB_STYLE "padding: 2px; text-align: left;"
+
 Mainwin::Mainwin(QWidget *parent) : QDialog(parent)
 {
 	QIcon pic	    = qh_loadIcon(ICONS_SHUTDOWN);
@@ -53,13 +55,13 @@ Mainwin::Mainwin(QWidget *parent) : QDialog(parent)
 						   tr("Suspend system"));
 	QPushButton *pb_cancel   = new QPushButton(icon_cancel, tr("Cancel"));
 
-	pb_timer->setStyleSheet("Text-align:left");
-	pb_logout->setStyleSheet("Text-align:left");
-	pb_reboot->setStyleSheet("Text-align:left");
-	pb_shutdown->setStyleSheet("Text-align:left");
-	pb_timer->setStyleSheet("Text-align:left");
-	pb_cancel->setStyleSheet("Text-align:left");
-	pb_suspend->setStyleSheet("Text-align:left");
+	pb_timer->setStyleSheet(PB_STYLE);
+	pb_logout->setStyleSheet(PB_STYLE);
+	pb_reboot->setStyleSheet(PB_STYLE);
+	pb_shutdown->setStyleSheet(PB_STYLE);
+	pb_timer->setStyleSheet(PB_STYLE);
+	pb_cancel->setStyleSheet(PB_STYLE);
+	pb_suspend->setStyleSheet(PB_STYLE);
 
 	icon->setPixmap(pic.pixmap(96));
 	hbox->addWidget(icon);
