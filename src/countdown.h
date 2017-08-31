@@ -46,6 +46,7 @@ private:
 private slots:
 	void update();
 	void hideWin();
+	void changeTimer();
 	void trayClicked(QSystemTrayIcon::ActivationReason reason);
 	void closeEvent(QCloseEvent *event);
 	void keyPressEvent(QKeyEvent *e);

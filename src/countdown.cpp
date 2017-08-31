@@ -28,6 +28,7 @@
 
 #include "icons.h"
 #include "countdown.h"
+#include "timerwin.h"
 #include "qt-helper/qt-helper.h"
 
 Countdown::Countdown(int hours, int minutes, QWidget *parent)
@@ -38,8 +39,9 @@ Countdown::Countdown(int hours, int minutes, QWidget *parent)
 	doShutdown   = false;
 	shutdownTime = time(NULL) + secondsLeft;
 
-	QIcon cnclIcon = qh_loadStockIcon(QStyle::SP_DialogCancelButton, NULL);
-	QIcon okIcon   = qh_loadStockIcon(QStyle::SP_DialogOkButton, NULL);
+	QIcon cnclIcon = qh_loadStockIcon(QStyle::SP_DialogCancelButton, 0);
+	QIcon okIcon   = qh_loadStockIcon(QStyle::SP_DialogOkButton, 0);
+	QIcon chgIcon  = qh_loadIcon(ICONS_TIMER);
 	QIcon pic      = qh_loadIcon(ICONS_TIMER);
 	QIcon tIcon    = pic;
 
@@ -52,6 +54,7 @@ Countdown::Countdown(int hours, int minutes, QWidget *parent)
 	QVBoxLayout *layout = new QVBoxLayout(this);
 	QPushButton *cancel = new QPushButton(cnclIcon, tr("Cancel timer"));
 	QPushButton *ok	    = new QPushButton(okIcon, tr("Ok"));
+	QPushButton *edit   = new QPushButton(chgIcon, tr("Change timer"));
 
 	setLabelText(hours, minutes);
 	trayIcon->setToolTip(label->text());
@@ -63,6 +66,7 @@ Countdown::Countdown(int hours, int minutes, QWidget *parent)
 	hbox->addWidget(label, 1, Qt::AlignHCenter);
 
 	btHbox->setSpacing(2);
+	btHbox->addWidget(edit, 0, Qt::AlignLeft);
 	btHbox->addWidget(ok, 1, Qt::AlignRight);
 	btHbox->addWidget(cancel, 0, Qt::AlignRight);
 
@@ -75,15 +79,12 @@ Countdown::Countdown(int hours, int minutes, QWidget *parent)
 	connect(timer, SIGNAL(timeout()), this, SLOT(update()));
 	connect(ok, SIGNAL(clicked()), this, SLOT(hideWin()));
 	connect(cancel, SIGNAL(clicked()), this, SLOT(reject()));
-
+	connect(edit, SIGNAL(clicked()), this, SLOT(changeTimer()));
 	if (secondsLeft <= 60)
 		timer->start(1000);
 	else
 		timer->start(60000);
 	trayIcon->show();
-	show();
-	setGeometry(QStyle::alignedRect(Qt::LeftToRight, Qt::AlignCenter,
-	    size(), qApp->desktop()->availableGeometry()));
 }
 
 void Countdown::setLabelText(int hours, int minutes, int seconds)
@@ -136,9 +137,13 @@ void Countdown::trayClicked(QSystemTrayIcon::ActivationReason reason)
 {
 	if (reason == QSystemTrayIcon::Trigger || 
 	    reason == QSystemTrayIcon::DoubleClick) {
-		if (!isVisible())
+		if (!isVisible()) {
+			show();
+			setGeometry(QStyle::alignedRect(Qt::LeftToRight,
+			    Qt::AlignCenter, size(),
+			    qApp->desktop()->availableGeometry()));
 			setVisible(true);
-		else
+		} else
 			setVisible(false);
 	}
 }
@@ -166,5 +171,23 @@ void Countdown::update()
 		doShutdown = true;
 		accept();
 	}
+}
+
+void Countdown::changeTimer()
+{
+	int secondsLeft = (int)(shutdownTime - time(NULL));
+	int hours   =  secondsLeft / (60 * 60);
+	int minutes = (secondsLeft -  hours * 60 * 60) / 60;
+	Timerwin tw(this);
+
+	tw.setHours(hours);
+	tw.setMinutes(minutes);
+
+	if (tw.exec() == QDialog::Accepted) {
+		shutdownTime = time(NULL) + tw.getHours() * 60 * 60 +
+			       tw.getMinutes() * 60;
+		update();
+	}
+	setVisible(false);
 }
 
