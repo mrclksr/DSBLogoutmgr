@@ -38,12 +38,14 @@ public:
 	Timerwin(QWidget *parent = 0);
 	int getHours();
 	int getMinutes();
+	void setMinutes(int minutes);
+	void setHours(int hours);
 private slots:
 	void setTimer();
 	void checkValue(int minutes);
 private:
-	int hours;
-	int minutes;
+	int hours   = 0;
+	int minutes = 1;
 	QSpinBox *hourSb;
 	QSpinBox *minSb;
 };

@@ -51,7 +51,8 @@ Timerwin::Timerwin(QWidget *parent) : QDialog(parent)
 	hourSb->setSuffix(tr(" Hours"));
 	minSb->setSuffix(tr(" Minutes"));
 	minSb->setMaximum(59);
-	minSb->setValue(1);
+	minSb->setValue(minutes);
+	hourSb->setValue(hours);
 
 	hbox->addWidget(hourSb);
 	hbox->addWidget(minSb);
@@ -69,9 +70,9 @@ Timerwin::Timerwin(QWidget *parent) : QDialog(parent)
 	vLayout->addLayout(hLayout);
 	vLayout->addLayout(btHbox);
 
-	connect(ok, SIGNAL(clicked()), this, SLOT(setTimer()));
+	connect(ok,     SIGNAL(clicked()), this, SLOT(setTimer()));
 	connect(cancel, SIGNAL(clicked()), this, SLOT(reject()));
-	connect(minSb, SIGNAL(valueChanged(int)), this, SLOT(checkValue(int)));
+	connect(minSb,  SIGNAL(valueChanged(int)), this, SLOT(checkValue(int)));
 	setModal(true);
 	setWindowFlags(windowFlags() | Qt::FramelessWindowHint);
 	show();
@@ -94,6 +95,16 @@ int Timerwin::getHours()
 int Timerwin::getMinutes()
 {
 	return (minutes);
+}
+
+void Timerwin::setHours(int hours)
+{
+	hourSb->setValue(hours);
+}
+
+void Timerwin::setMinutes(int minutes)
+{
+	minSb->setValue(minutes);
 }
 
 void Timerwin::checkValue(int minutes)
