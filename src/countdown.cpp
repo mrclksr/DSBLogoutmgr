@@ -70,6 +70,7 @@ Countdown::Countdown(int hours, int minutes, QWidget *parent)
 	btHbox->addWidget(ok, 1, Qt::AlignRight);
 	btHbox->addWidget(cancel, 0, Qt::AlignRight);
 
+	layout->setSpacing(10);
 	layout->addLayout(hbox);
 	layout->addLayout(btHbox);
 

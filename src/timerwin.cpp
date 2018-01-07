@@ -68,6 +68,7 @@ Timerwin::Timerwin(QWidget *parent) : QDialog(parent)
 	hLayout->addWidget(icon);
 	hLayout->addLayout(vbox);
 
+	vLayout->setSpacing(10);
 	vLayout->addLayout(hLayout);
 	vLayout->addLayout(btHbox);
 

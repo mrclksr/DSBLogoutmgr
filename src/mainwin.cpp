@@ -72,6 +72,7 @@ Mainwin::Mainwin(QWidget *parent) : QDialog(parent)
 	vbox->addWidget(pb_suspend);
 	vbox->addWidget(pb_timer);
 	vbox->addWidget(pb_cancel);
+	vbox->setSpacing(5);
 	hbox->addSpacing(20);
 	hbox->addLayout(vbox);
 	layout->addLayout(hbox);
