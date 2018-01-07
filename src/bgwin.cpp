@@ -27,24 +27,35 @@
 #include <QLabel>
 #include <QPixmap>
 #include <QScreen>
+#include <QWindow>
+#include <QDesktopWidget>
 
 #include "bgwin.h"
 
 BgWin::BgWin(QWidget *parent) : QMainWindow(parent) {
-	QPixmap pixmap = QGuiApplication::primaryScreen()->grabWindow(0);
-	QImage image = pixmap.toImage();
-	for (int y = 0; y < image.height(); y++) {
-		for (int x = 0; x < image.width(); x++) {
-			QRgb c = image.pixel(x, y);
-			image.setPixel(x, y, qRgb(qRed(c) >> 2,
-			    qGreen(c) >> 2, qBlue(c) >> 2));
+	QList <QScreen *> screens = QGuiApplication::screens();
+	int primary = QApplication::desktop()->primaryScreen();
+
+	for (int i = 0; i < screens.size(); i++) {
+		QRect g = screens.at(i)->geometry();
+		QPixmap pixmap = screens.at(i)->grabWindow(0,
+		    g.topLeft().rx(), g.topLeft().ry(), g.width(), g.height());
+		QImage image = pixmap.toImage();
+		for (int y = 0; y < image.height(); y++) {
+			for (int x = 0; x < image.width(); x++) {
+				QRgb c = image.pixel(x, y);
+				image.setPixel(x, y, qRgb(qRed(c) >> 2,
+				    qGreen(c) >> 2, qBlue(c) >> 2));
+			}
 		}
+		pixmap = QPixmap::fromImage(image);
+		QLabel *content = new QLabel();
+		content->setPixmap(pixmap);
+		content->move(QPoint(g.topLeft().rx(), g.topLeft().ry()));
+		if (i == primary)
+			setCentralWidget(content);
+		content->setWindowFlags(Qt::Window | Qt::FramelessWindowHint);
+		content->showFullScreen();
 	}
-	pixmap = QPixmap::fromImage(image);
-	QLabel *content = new QLabel();
-	content->setPixmap(pixmap);
-	setCentralWidget(content);
-	setWindowFlags(Qt::Window | Qt::FramelessWindowHint);
-	showFullScreen();
 }
 
