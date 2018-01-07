@@ -50,7 +50,8 @@ Timerwin::Timerwin(QWidget *parent) : QDialog(parent)
 	icon->setPixmap(pic.pixmap(96));
 	hourSb->setSuffix(tr(" Hours"));
 	minSb->setSuffix(tr(" Minutes"));
-	minSb->setMaximum(59);
+	minSb->setMinimum(-1);
+	minSb->setMaximum(60);
 	minSb->setValue(minutes);
 	hourSb->setValue(hours);
 
@@ -72,7 +73,8 @@ Timerwin::Timerwin(QWidget *parent) : QDialog(parent)
 
 	connect(ok,     SIGNAL(clicked()), this, SLOT(setTimer()));
 	connect(cancel, SIGNAL(clicked()), this, SLOT(reject()));
-	connect(minSb,  SIGNAL(valueChanged(int)), this, SLOT(checkValue(int)));
+	connect(minSb,  SIGNAL(valueChanged(int)), this, SLOT(checkValue()));
+	connect(hourSb, SIGNAL(valueChanged(int)), this, SLOT(checkValue()));
 	setModal(true);
 	setWindowFlags(windowFlags() | Qt::FramelessWindowHint);
 	show();
@@ -107,9 +109,19 @@ void Timerwin::setMinutes(int minutes)
 	minSb->setValue(minutes);
 }
 
-void Timerwin::checkValue(int minutes)
+void Timerwin::checkValue()
 {
-	if (hourSb->value() == 0 && minutes == 0)
+	if (hourSb->value() == 0 && minSb->value() <= 0) {
 		minSb->setValue(1);
+	} else if (minSb->value() == 60) {
+		hourSb->setValue(hourSb->value() + 1);
+		minSb->setValue(0);
+	} else if (minSb->value() == -1) {
+		if (hourSb->value() > 0) {
+			hourSb->setValue(hourSb->value() - 1);
+			minSb->setValue(59);
+		} else
+			minSb->setValue(1);
+	}
 }
 
