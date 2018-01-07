@@ -42,7 +42,7 @@ public:
 	void setHours(int hours);
 private slots:
 	void setTimer();
-	void checkValue(int minutes);
+	void checkValue();
 private:
 	int hours   = 0;
 	int minutes = 1;
