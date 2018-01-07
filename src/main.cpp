@@ -129,7 +129,7 @@ main(int argc, char *argv[])
 		case TIMER:
 			Timerwin *tw = new Timerwin(bg);
 			if (tw->exec() == QDialog::Accepted) {
-				bg->close();
+				delete(bg);
 				Countdown *c = new Countdown(tw->getHours(),
 				    tw->getMinutes());
 				app.exec();
