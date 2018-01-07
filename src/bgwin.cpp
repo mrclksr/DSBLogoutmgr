@@ -49,7 +49,7 @@ BgWin::BgWin(QWidget *parent) : QMainWindow(parent) {
 			}
 		}
 		pixmap = QPixmap::fromImage(image);
-		QLabel *content = new QLabel();
+		QLabel *content = new QLabel(this);
 		content->setPixmap(pixmap);
 		content->move(QPoint(g.topLeft().rx(), g.topLeft().ry()));
 		if (i == primary)
