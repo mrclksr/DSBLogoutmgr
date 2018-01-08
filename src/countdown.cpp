@@ -73,6 +73,7 @@ Countdown::Countdown(int hours, int minutes, QWidget *parent)
 	layout->setSpacing(10);
 	layout->addLayout(hbox);
 	layout->addLayout(btHbox);
+	layout->setContentsMargins(15, 15, 15, 15);
 
 	connect(trayIcon,
 	    SIGNAL(activated(QSystemTrayIcon::ActivationReason)), this,

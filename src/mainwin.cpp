@@ -76,6 +76,7 @@ Mainwin::Mainwin(QWidget *parent) : QDialog(parent)
 	hbox->addSpacing(20);
 	hbox->addLayout(vbox);
 	layout->addLayout(hbox);
+	layout->setContentsMargins(15, 15, 15, 15);
 
 	connect(pb_timer,    SIGNAL(clicked()), this, SLOT(timerClicked()));
 	connect(pb_logout,   SIGNAL(clicked()), this, SLOT(logoutClicked()));

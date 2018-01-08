@@ -71,6 +71,7 @@ Timerwin::Timerwin(QWidget *parent) : QDialog(parent)
 	vLayout->setSpacing(10);
 	vLayout->addLayout(hLayout);
 	vLayout->addLayout(btHbox);
+	vLayout->setContentsMargins(15, 15, 15, 15);
 
 	connect(ok,     SIGNAL(clicked()), this, SLOT(setTimer()));
 	connect(cancel, SIGNAL(clicked()), this, SLOT(reject()));
