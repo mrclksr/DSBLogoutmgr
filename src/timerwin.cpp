@@ -113,17 +113,22 @@ void Timerwin::setMinutes(int minutes)
 
 void Timerwin::checkValue()
 {
-	if (hourSb->value() == 0 && minSb->value() <= 0) {
+	minSb->blockSignals(true);
+	hourSb->blockSignals(true);
+
+	if (hourSb->value() == 0 && minSb->value() == 0) {
 		minSb->setValue(1);
 	} else if (minSb->value() == 60) {
-		hourSb->setValue(hourSb->value() + 1);
 		minSb->setValue(0);
+		hourSb->setValue(hourSb->value() + 1);
 	} else if (minSb->value() == -1) {
 		if (hourSb->value() > 0) {
-			hourSb->setValue(hourSb->value() - 1);
 			minSb->setValue(59);
+			hourSb->setValue(hourSb->value() - 1);
 		} else
 			minSb->setValue(1);
 	}
+	minSb->blockSignals(false);
+	hourSb->blockSignals(false);
 }
 
