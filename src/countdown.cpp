@@ -180,7 +180,7 @@ void Countdown::changeTimer()
 	int secondsLeft = (int)(shutdownTime - time(NULL));
 	int hours   =  secondsLeft / (60 * 60);
 	int minutes = (secondsLeft -  hours * 60 * 60) / 60;
-	Timerwin tw(this);
+	Timerwin tw;
 
 	tw.setHours(hours);
 	tw.setMinutes(minutes);
