@@ -31,6 +31,7 @@
 Timerwin::Timerwin(QWidget *parent) : QDialog(parent)
 {
 	QIcon pic      = qh_loadIcon(ICONS_TIMER);
+	QIcon wIcon    = pic;
 	QIcon okIcon   = qh_loadStockIcon(QStyle::SP_DialogOkButton, NULL);
 	QIcon cnclIcon = qh_loadStockIcon(QStyle::SP_DialogCancelButton, NULL);
 
@@ -73,12 +74,18 @@ Timerwin::Timerwin(QWidget *parent) : QDialog(parent)
 	vLayout->addLayout(btHbox);
 	vLayout->setContentsMargins(15, 15, 15, 15);
 
+	setWindowIcon(wIcon);
+
 	connect(ok,     SIGNAL(clicked()), this, SLOT(setTimer()));
 	connect(cancel, SIGNAL(clicked()), this, SLOT(reject()));
 	connect(minSb,  SIGNAL(valueChanged(int)), this, SLOT(checkValue()));
 	connect(hourSb, SIGNAL(valueChanged(int)), this, SLOT(checkValue()));
 	setModal(true);
-	setWindowFlags(windowFlags() | Qt::FramelessWindowHint);
+
+	if (parent) {
+		setWindowFlags(windowFlags() | Qt::FramelessWindowHint |
+		    Qt::WindowStaysOnTopHint);
+	}
 	show();
 	setGeometry(QStyle::alignedRect(Qt::LeftToRight, Qt::AlignCenter,
 	    size(), qApp->desktop()->availableGeometry()));
