@@ -54,7 +54,8 @@ BgWin::BgWin(QWidget *parent) : QMainWindow(parent) {
 		content->move(QPoint(g.topLeft().rx(), g.topLeft().ry()));
 		if (i == primary)
 			setCentralWidget(content);
-		content->setWindowFlags(Qt::Window | Qt::FramelessWindowHint);
+		content->setWindowFlags(Qt::Window | Qt::FramelessWindowHint |
+		    Qt::WindowStaysOnTopHint);
 		content->showFullScreen();
 	}
 }
