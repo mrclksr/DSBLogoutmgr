@@ -84,7 +84,7 @@ Timerwin::Timerwin(QWidget *parent) : QDialog(parent)
 
 	if (parent) {
 		setWindowFlags(windowFlags() | Qt::FramelessWindowHint |
-		    Qt::WindowStaysOnTopHint);
+		    Qt::WindowStaysOnTopHint | Qt::BypassWindowManagerHint);
 	}
 	show();
 	setGeometry(QStyle::alignedRect(Qt::LeftToRight, Qt::AlignCenter,

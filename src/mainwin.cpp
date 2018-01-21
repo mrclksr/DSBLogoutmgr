@@ -23,7 +23,7 @@
  */
 #include <QStyle>
 #include <QDesktopWidget>
-
+#include <QWindow>
 #include "icons.h"
 #include "mainwin.h"
 #include "bgwin.h"
@@ -86,7 +86,7 @@ Mainwin::Mainwin(QWidget *parent) : QDialog(parent)
 	connect(pb_cancel,   SIGNAL(clicked()), this, SLOT(reject()));
 	setModal(true);
 	setWindowFlags(windowFlags() | Qt::Dialog | Qt::FramelessWindowHint |
-	    Qt::WindowStaysOnTopHint);
+	    Qt::WindowStaysOnTopHint | Qt::BypassWindowManagerHint);
 	show();
 	setGeometry(QStyle::alignedRect(Qt::LeftToRight, Qt::AlignCenter,
 	    size(), qApp->desktop()->availableGeometry()));
