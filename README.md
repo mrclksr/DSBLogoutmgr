@@ -126,4 +126,3 @@ in
 > to be set in
 > *~/.fluxbox/init*.
 
-FreeBSD 11.2-PRERELEASE - July 25, 2018
