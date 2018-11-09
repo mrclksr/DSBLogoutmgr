@@ -28,9 +28,10 @@
  * Definition of config file variables and their default values.
  */
 enum { 
-	CFG_LOGOUT, CFG_SHUTDOWN, CFG_REBOOT, CFG_SUSPEND, CFG_NVARS
+	CFG_LOCK, CFG_LOGOUT, CFG_SHUTDOWN, CFG_REBOOT, CFG_SUSPEND, CFG_NVARS
 };
 
+#define CFG_LOCK_CMD	 "metalock"
 #define CFG_LOGOUT_CMD	 "fluxbox exit"
 #define CFG_SHUTDOWN_CMD "shutdown -p now"
 #define CFG_REBOOT_CMD	 "shutdown -r now"

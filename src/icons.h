@@ -43,3 +43,5 @@
 			"xfsm-reboot",		\
 			NULL
 
+#define	ICONS_LOCK	"system-lock-screen",	\
+			NULL

@@ -39,6 +39,7 @@ Mainwin::Mainwin(QWidget *parent) : QDialog(parent)
 	QIcon icon_suspend  = qh_loadIcon(ICONS_SUSPEND);
 	QIcon icon_timer    = qh_loadIcon(ICONS_TIMER);
 	QIcon icon_reboot   = qh_loadIcon(ICONS_REBOOT);
+	QIcon icon_lock     = qh_loadIcon(ICONS_LOCK);
 	QIcon icon_cancel   = qh_loadStockIcon(QStyle::SP_DialogCancelButton,
 					       NULL);
 	QLabel	    *icon	 = new QLabel;
@@ -54,6 +55,7 @@ Mainwin::Mainwin(QWidget *parent) : QDialog(parent)
 	QPushButton *pb_suspend  = new QPushButton(icon_suspend,
 						   tr("Suspend system"));
 	QPushButton *pb_cancel   = new QPushButton(icon_cancel, tr("Cancel"));
+	QPushButton *pb_lock     = new QPushButton(icon_lock, tr("Lock screen"));
 
 	pb_timer->setStyleSheet(PB_STYLE);
 	pb_logout->setStyleSheet(PB_STYLE);
@@ -62,6 +64,7 @@ Mainwin::Mainwin(QWidget *parent) : QDialog(parent)
 	pb_timer->setStyleSheet(PB_STYLE);
 	pb_cancel->setStyleSheet(PB_STYLE);
 	pb_suspend->setStyleSheet(PB_STYLE);
+	pb_lock->setStyleSheet(PB_STYLE);
 
 	icon->setPixmap(pic.pixmap(96));
 	hbox->addWidget(icon);
@@ -70,6 +73,7 @@ Mainwin::Mainwin(QWidget *parent) : QDialog(parent)
 	vbox->addWidget(pb_reboot);
 	vbox->addWidget(pb_shutdown);
 	vbox->addWidget(pb_suspend);
+	vbox->addWidget(pb_lock);
 	vbox->addWidget(pb_timer);
 	vbox->addWidget(pb_cancel);
 	vbox->setSpacing(5);
@@ -79,6 +83,7 @@ Mainwin::Mainwin(QWidget *parent) : QDialog(parent)
 	layout->setContentsMargins(15, 15, 15, 15);
 
 	connect(pb_timer,    SIGNAL(clicked()), this, SLOT(timerClicked()));
+	connect(pb_lock,     SIGNAL(clicked()), this, SLOT(lockClicked()));
 	connect(pb_logout,   SIGNAL(clicked()), this, SLOT(logoutClicked()));
 	connect(pb_reboot,   SIGNAL(clicked()), this, SLOT(rebootClicked()));
 	connect(pb_shutdown, SIGNAL(clicked()), this, SLOT(shutdownClicked()));
@@ -119,6 +124,12 @@ void Mainwin::suspendClicked()
 void Mainwin::timerClicked()
 {
 	button = TIMER;
+	accept();
+}
+
+void Mainwin::lockClicked()
+{
+	button = LOCK;
 	accept();
 }
 

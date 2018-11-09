@@ -31,7 +31,7 @@
 #include <QIcon>
 #include <QPixmap>
 
-enum BUTTON { LOGOUT, REBOOT, SHUTDOWN, SUSPEND, TIMER };
+enum BUTTON { LOGOUT, REBOOT, SHUTDOWN, SUSPEND, TIMER, LOCK };
 
 class Mainwin : public QDialog
 {
@@ -45,6 +45,7 @@ private slots:
 	void shutdownClicked();
 	void suspendClicked();
 	void timerClicked();
+	void lockClicked();
 private:
 	int button;
 };

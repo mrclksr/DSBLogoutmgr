@@ -161,9 +161,10 @@ static void
 usage()
 {
 	(void)fprintf(stderr,
-	    "Usage: %s [-l <logout command>] [-r <reboot command>]\n" \
-	    "       %-*s [-s <shutdown command>] [-S <suspend command>]\n",
-	    PROGRAM, (int)sizeof(PROGRAM) - 1, "");
+	    "Usage: %s [-L <lock command>] [-S <suspend command>]\n" \
+	    "       %-*s [-l <logout command>] [-r <reboot command>]\n" \
+	    "       %-*s [-s <shutdown command>]\n", PROGRAM,
+	    (int)sizeof(PROGRAM) - 1, "", (int)sizeof(PROGRAM) - 1, "");
 	exit(EXIT_FAILURE);
 }
 

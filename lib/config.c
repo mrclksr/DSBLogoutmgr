@@ -26,6 +26,10 @@
 
 dsbcfg_vardef_t vardefs[] = {
 	{
+		"lock", DSBCFG_VAR_STRING, CFG_LOCK,
+		DSBCFG_VAL(CFG_LOCK_CMD)
+	},
+	{
 		"logout", DSBCFG_VAR_STRING, CFG_LOGOUT,
 		DSBCFG_VAL(CFG_LOGOUT_CMD)
 	},
