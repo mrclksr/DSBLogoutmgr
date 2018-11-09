@@ -43,7 +43,7 @@
 #include "config.h"
 
 static void usage(void);
-static void execmd(const char *cmd, QWidget *bgwin);
+static void execmd(const char *cmd);
 
 int
 main(int argc, char *argv[])
@@ -52,7 +52,7 @@ main(int argc, char *argv[])
 	char	      path_lock[PATH_MAX];
 	FILE	      *fp;
 	dsbcfg_t      *cfg;
-	const char    *cmds[5];
+	const char    *cmds[6];
 	struct passwd *pw;
 
 	QApplication app(argc, argv);
@@ -85,13 +85,17 @@ main(int argc, char *argv[])
 			exit(EXIT_SUCCESS);
                 qh_err(0, EXIT_FAILURE, "lockf()");
 	}
+	cmds[LOCK]     = dsbcfg_getval(cfg, CFG_LOCK).string;
 	cmds[LOGOUT]   = dsbcfg_getval(cfg, CFG_LOGOUT).string;
 	cmds[REBOOT]   = dsbcfg_getval(cfg, CFG_REBOOT).string;
 	cmds[SUSPEND]  = dsbcfg_getval(cfg, CFG_SUSPEND).string;
 	cmds[SHUTDOWN] = dsbcfg_getval(cfg, CFG_SHUTDOWN).string;
 
-	while ((ch = getopt(argc, argv, "l:r:s:S:")) != -1) {
+	while ((ch = getopt(argc, argv, "l:r:s:S:L:")) != -1) {
 		switch (ch) {
+		case 'L':
+			cmds[LOCK] = optarg;
+			break;
 		case 'l':
 			cmds[LOGOUT] = optarg;
 			break;
@@ -113,18 +117,23 @@ main(int argc, char *argv[])
 	Mainwin *w  = new Mainwin(bg);
 
 	while (w->exec() == QDialog::Accepted) {
+		if (w->getButton() != TIMER)
+			delete(bg);
 		switch (w->getButton()) {
+		case LOCK:
+			execmd(cmds[LOCK]);
+			break;
 		case LOGOUT:
-			execmd(cmds[LOGOUT], bg);
+			execmd(cmds[LOGOUT]);
 			break;
 		case SHUTDOWN:
-			execmd(cmds[SHUTDOWN], bg);
+			execmd(cmds[SHUTDOWN]);
 			break;
 		case SUSPEND:
-			execmd(cmds[SUSPEND], bg);
+			execmd(cmds[SUSPEND]);
 			break;
 		case REBOOT:
-			execmd(cmds[REBOOT], bg);
+			execmd(cmds[REBOOT]);
 			break;
 		case TIMER:
 			Timerwin *tw = new Timerwin(bg);
@@ -134,7 +143,7 @@ main(int argc, char *argv[])
 				    tw->getMinutes());
 				app.exec();
 				if (c->shutdown())
-					execmd(cmds[SHUTDOWN], 0);
+					execmd(cmds[SHUTDOWN]);
 				return (EXIT_SUCCESS);
 			}
 			delete(tw);
@@ -145,15 +154,21 @@ main(int argc, char *argv[])
 }
 
 static void
-execmd(const char *cmd, QWidget *bgwin)
+execmd(const char *cmd)
 {
 	int error;
 
-	if ((error = system(cmd)) == -1)
-		qh_err(bgwin, EXIT_FAILURE, "system(%s)", cmd);
-	else if (error == 0)
+	if ((error = system(cmd)) == -1) {
+		qh_err(0, EXIT_FAILURE, "system(%s)", cmd);
+	} else if (error == 0) {
 		exit(EXIT_SUCCESS);
-	qh_errx(bgwin, EXIT_FAILURE, "Command '%s' exited with code %d",
+	} else if ((error >> 8) == 127) {
+		qh_errx(0, EXIT_FAILURE,
+		    qApp->tr("Command '%s' not found").toLocal8Bit().data(),
+		    cmd);
+	}
+	qh_errx(0, EXIT_FAILURE,
+	    qApp->tr("Command '%s' exited with code %d").toLocal8Bit().data(),
 	    cmd, (error >> 8));
 }
 
