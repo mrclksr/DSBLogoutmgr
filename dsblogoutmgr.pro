@@ -26,6 +26,7 @@ HEADERS	    += lib/config.h \
 	       src/mainwin.h \
 	       src/timerwin.h \
 	       src/countdown.h \
+	       src/delay.h \
 	       lib/dsbcfg/dsbcfg.h \
 	       lib/qt-helper/qt-helper.h
 SOURCES	    += lib/config.c \
@@ -34,6 +35,7 @@ SOURCES	    += lib/config.c \
 	       src/mainwin.cpp \
 	       src/countdown.cpp \
 	       src/timerwin.cpp \
+	       src/delay.cpp \
 	       lib/dsbcfg/dsbcfg.c \
 	       lib/qt-helper/qt-helper.cpp
 
