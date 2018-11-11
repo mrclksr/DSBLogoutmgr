@@ -30,7 +30,7 @@
 #include "delay.h"
 #include "qt-helper/qt-helper.h"
 
-#define PB_STYLE "padding: 2px; text-align: left;"
+#define PB_STYLE "padding: 5px 10px 5px 10px; text-align: left;"
 
 Delay::Delay(int seconds, const QString &actionName, const QString &text,
 	const QIcon &icon, QWidget *parent) : QDialog(parent)
