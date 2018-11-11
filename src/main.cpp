@@ -164,11 +164,11 @@ execmd(const char *cmd)
 		exit(EXIT_SUCCESS);
 	} else if ((error >> 8) == 127) {
 		qh_errx(0, EXIT_FAILURE,
-		    qApp->tr("Command '%s' not found").toLocal8Bit().data(),
+		    QObject::tr("Command '%s' not found").toLocal8Bit().data(),
 		    cmd);
 	}
 	qh_errx(0, EXIT_FAILURE,
-	    qApp->tr("Command '%s' exited with code %d").toLocal8Bit().data(),
+	    QObject::tr("Command '%s' exited with code %d").toLocal8Bit().data(),
 	    cmd, (error >> 8));
 }
 
