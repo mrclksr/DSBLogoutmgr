@@ -47,6 +47,12 @@ private slots:
 	void timerClicked();
 	void lockClicked();
 private:
-	int button;
+	int   button;
+	QIcon icon_logout;
+	QIcon icon_shutdown;
+	QIcon icon_suspend;
+	QIcon icon_timer;
+	QIcon icon_reboot;
+	QIcon icon_lock;
 };
 

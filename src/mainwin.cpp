@@ -28,35 +28,36 @@
 #include "mainwin.h"
 #include "bgwin.h"
 #include "qt-helper/qt-helper.h"
+#include "delay.h"
 
+#define DELAY	 10
 #define PB_STYLE "padding: 2px; text-align: left;"
 
 Mainwin::Mainwin(QWidget *parent) : QDialog(parent)
 {
-	QIcon pic	    = qh_loadIcon(ICONS_SHUTDOWN);
-	QIcon icon_logout   = qh_loadIcon(ICONS_LOGOUT);
-	QIcon icon_shutdown = qh_loadIcon(ICONS_SHUTDOWN);
-	QIcon icon_suspend  = qh_loadIcon(ICONS_SUSPEND);
-	QIcon icon_timer    = qh_loadIcon(ICONS_TIMER);
-	QIcon icon_reboot   = qh_loadIcon(ICONS_REBOOT);
-	QIcon icon_lock     = qh_loadIcon(ICONS_LOCK);
-	QIcon icon_cancel   = qh_loadStockIcon(QStyle::SP_DialogCancelButton,
-					       NULL);
+	icon_logout		 = qh_loadIcon(ICONS_LOGOUT);
+	icon_shutdown		 = qh_loadIcon(ICONS_SHUTDOWN);
+	icon_suspend		 = qh_loadIcon(ICONS_SUSPEND);
+	icon_timer		 = qh_loadIcon(ICONS_TIMER);
+	icon_reboot   		 = qh_loadIcon(ICONS_REBOOT);
+	icon_lock     		 = qh_loadIcon(ICONS_LOCK);
+	QIcon pic     		 = qh_loadIcon(ICONS_SHUTDOWN);
+	QIcon icon_cancel 	 = qh_loadStockIcon(
+					QStyle::SP_DialogCancelButton, NULL);
 	QLabel	    *icon	 = new QLabel;
 	QHBoxLayout *hbox	 = new QHBoxLayout;
 	QVBoxLayout *vbox	 = new QVBoxLayout;
 	QVBoxLayout *layout	 = new QVBoxLayout(this);
 	QPushButton *pb_timer	 = new QPushButton(icon_timer,  tr("Timer"));
 	QPushButton *pb_logout	 = new QPushButton(icon_logout, tr("Logout"));
+	QPushButton *pb_cancel   = new QPushButton(icon_cancel, tr("Cancel"));
+	QPushButton *pb_lock     = new QPushButton(icon_lock, tr("Lock screen"));
 	QPushButton *pb_reboot	 = new QPushButton(icon_reboot,
 						   tr("Reboot system"));
 	QPushButton *pb_shutdown = new QPushButton(icon_shutdown,
 						   tr("Shutdown system"));
 	QPushButton *pb_suspend  = new QPushButton(icon_suspend,
 						   tr("Suspend system"));
-	QPushButton *pb_cancel   = new QPushButton(icon_cancel, tr("Cancel"));
-	QPushButton *pb_lock     = new QPushButton(icon_lock, tr("Lock screen"));
-
 	pb_timer->setStyleSheet(PB_STYLE);
 	pb_logout->setStyleSheet(PB_STYLE);
 	pb_reboot->setStyleSheet(PB_STYLE);
@@ -89,6 +90,7 @@ Mainwin::Mainwin(QWidget *parent) : QDialog(parent)
 	connect(pb_shutdown, SIGNAL(clicked()), this, SLOT(shutdownClicked()));
 	connect(pb_suspend,  SIGNAL(clicked()), this, SLOT(suspendClicked()));
 	connect(pb_cancel,   SIGNAL(clicked()), this, SLOT(reject()));
+
 	setModal(true);
 	setWindowFlags(windowFlags() | Qt::Dialog | Qt::FramelessWindowHint |
 	    Qt::WindowStaysOnTopHint | Qt::BypassWindowManagerHint);
@@ -99,26 +101,40 @@ Mainwin::Mainwin(QWidget *parent) : QDialog(parent)
 
 void Mainwin::logoutClicked()
 {
-	button = LOGOUT;
-	accept();
+	Delay d(DELAY, tr("Logout"), tr("Logging out in"), icon_logout, this);
+	if (d.exec() == QDialog::Accepted) {
+		button = LOGOUT;
+		accept();
+	}
 }
 
 void Mainwin::rebootClicked()
 {
-	button = REBOOT;
-	accept();
+	Delay d(DELAY, tr("Reboot"), tr("Rebooting in"), icon_reboot, this);
+	if (d.exec() == QDialog::Accepted) {
+		button = REBOOT;
+		accept();
+	}
 }
 
 void Mainwin::shutdownClicked()
 {
-	button = SHUTDOWN;
-	accept();
+	Delay d(DELAY, tr("Shutdown"), tr("Shutting down in"), icon_shutdown,
+	    this);
+	if (d.exec() == QDialog::Accepted) {
+		button = SHUTDOWN;
+		accept();
+	}
 }
 
 void Mainwin::suspendClicked()
 {
-	button = SUSPEND;
-	accept();
+	Delay d(DELAY, tr("Suspend"), tr("Suspending system in"), icon_suspend,
+	    this);
+	if (d.exec() == QDialog::Accepted) {
+		button = SUSPEND;
+		accept();
+	}
 }
 
 void Mainwin::timerClicked()
@@ -129,8 +145,12 @@ void Mainwin::timerClicked()
 
 void Mainwin::lockClicked()
 {
-	button = LOCK;
-	accept();
+	Delay d(DELAY, tr("Lock screen"), tr("Locking screen in"), icon_lock,
+	    this);
+	if (d.exec() == QDialog::Accepted) {
+		button = LOCK;
+		accept();
+	}
 }
 
 int Mainwin::getButton()
