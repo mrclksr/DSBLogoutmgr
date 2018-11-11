@@ -21,12 +21,19 @@ devel/qt5-qmake, x11-toolkits/qt5-gui, and x11-toolkits/qt5-widgets
 .Ed
 .Sh USAGE
 .Nm
+.Op Fl L Ar <lock command>
+.Op Fl S Ar <suspend command>
 .Op Fl l Ar <logout command>
 .Op Fl r Ar <reboot command>
 .Op Fl s Ar <shutdown command>
-.Op Fl S Ar <suspend command>
 .Sh OPTIONS
 .Bl -tag -width indent
+.It Fl L
+Defines the screen lock command. Default
+.Em Qq metalock
+.It Fl S
+Defines the suspend command. Default
+.Em Qq acpiconf -s 3
 .It Fl l
 Defines the logout command. Default
 .Em Qq fluxbox exit
@@ -36,9 +43,6 @@ Defines the reboot command. Default
 .It Fl s
 Defines the shutdown command. Default
 .Em Qq shutdown -p now
-.It Fl S
-Defines the suspend command. Default
-.Em Qq acpiconf -s 3
 .Sh SETUP
 Commands for the actions can also be defined in
 .Em ~/.config/DSB/dsblogoutmgr/config
