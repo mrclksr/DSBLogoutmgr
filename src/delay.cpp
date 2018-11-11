@@ -30,6 +30,8 @@
 #include "delay.h"
 #include "qt-helper/qt-helper.h"
 
+#define PB_STYLE "padding: 2px; text-align: left;"
+
 Delay::Delay(int seconds, const QString &actionName, const QString &text,
 	const QIcon &icon, QWidget *parent) : QDialog(parent)
 {
@@ -38,11 +40,15 @@ Delay::Delay(int seconds, const QString &actionName, const QString &text,
 	label		    = new QLabel("");
 	timer		    = new QTimer(this);
 	QIcon cnclIcon	    = qh_loadStockIcon(QStyle::SP_DialogCancelButton, 0);
+ 
 	QHBoxLayout *hbox   = new QHBoxLayout;
 	QHBoxLayout *btHbox = new QHBoxLayout;
 	QVBoxLayout *layout = new QVBoxLayout(this);
 	QPushButton *cancel = new QPushButton(cnclIcon, tr("Cancel"));
 	QPushButton *action = new QPushButton(icon, actionName);
+
+	action->setStyleSheet(PB_STYLE);
+	cancel->setStyleSheet(PB_STYLE);
 
 	setLabelText(text, seconds);
 	setWindowIcon(icon);
