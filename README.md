@@ -25,12 +25,23 @@ devel/qt5-qmake, x11-toolkits/qt5-gui, and x11-toolkits/qt5-widgets
 # USAGE
 
 **dsblogoutmgr**
+\[**-L** *&lt;lock command&gt;*]
+\[**-S** *&lt;suspend command&gt;*]
 \[**-l** *&lt;logout command&gt;*]
 \[**-r** *&lt;reboot command&gt;*]
 \[**-s** *&lt;shutdown command&gt;*]
-\[**-S** *&lt;suspend command&gt;*]
 
 # OPTIONS
+
+**-L**
+
+> Defines the screen lock command. Default
+> "metalock"
+
+**-S**
+
+> Defines the suspend command. Default
+> "acpiconf -s 3"
 
 **-l**
 
@@ -46,11 +57,6 @@ devel/qt5-qmake, x11-toolkits/qt5-gui, and x11-toolkits/qt5-widgets
 
 > Defines the shutdown command. Default
 > "shutdown -p now"
-
-**-S**
-
-> Defines the suspend command. Default
-> "acpiconf -s 3"
 
 # SETUP
 
