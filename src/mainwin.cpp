@@ -51,7 +51,8 @@ Mainwin::Mainwin(QWidget *parent) : QDialog(parent)
 	QPushButton *pb_timer	 = new QPushButton(icon_timer,  tr("Timer"));
 	QPushButton *pb_logout	 = new QPushButton(icon_logout, tr("Logout"));
 	QPushButton *pb_cancel   = new QPushButton(icon_cancel, tr("Cancel"));
-	QPushButton *pb_lock     = new QPushButton(icon_lock, tr("Lock screen"));
+	QPushButton *pb_lock     = new QPushButton(icon_lock,
+						   tr("Lock screen"));
 	QPushButton *pb_reboot	 = new QPushButton(icon_reboot,
 						   tr("Reboot system"));
 	QPushButton *pb_shutdown = new QPushButton(icon_shutdown,
@@ -110,7 +111,8 @@ void Mainwin::logoutClicked()
 
 void Mainwin::rebootClicked()
 {
-	Delay d(DELAY, tr("Reboot"), tr("Rebooting in"), icon_reboot, this);
+	Delay d(DELAY, tr("Reboot system"), tr("Rebooting in"), icon_reboot,
+	    this);
 	if (d.exec() == QDialog::Accepted) {
 		button = REBOOT;
 		accept();
@@ -119,8 +121,8 @@ void Mainwin::rebootClicked()
 
 void Mainwin::shutdownClicked()
 {
-	Delay d(DELAY, tr("Shutdown"), tr("Shutting down in"), icon_shutdown,
-	    this);
+	Delay d(DELAY, tr("Shutdown system"), tr("Shutting down in"),
+	    icon_shutdown, this);
 	if (d.exec() == QDialog::Accepted) {
 		button = SHUTDOWN;
 		accept();
@@ -129,8 +131,8 @@ void Mainwin::shutdownClicked()
 
 void Mainwin::suspendClicked()
 {
-	Delay d(DELAY, tr("Suspend"), tr("Suspending system in"), icon_suspend,
-	    this);
+	Delay d(DELAY, tr("Suspend system"), tr("Suspending system in"),
+	    icon_suspend, this);
 	if (d.exec() == QDialog::Accepted) {
 		button = SUSPEND;
 		accept();
