@@ -76,6 +76,15 @@ suspend = "sudo acpiconf -s 3"
 
 in
 .Em ~/.config/DSB/dsblogoutmgr/config
+.Pp
+.Sy Note :
+On FreeBSD >= 12, members of the
+.Em operator
+group are allowed to execute
+.Em acpiconf .
+Using
+.Xr sudo 8
+is not necessary.
 .Ss Closing window manager-sessions
 .Pp
 .Bl -tag
