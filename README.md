@@ -101,6 +101,15 @@ flag on the command line, or set
 in
 *~/.config/DSB/dsblogoutmgr/config*
 
+**Note**:
+On FreeBSD &gt;= 12, members of the
+*operator*
+group are allowed to execute
+*acpiconf*.
+Using
+sudo(8)
+is not necessary.
+
 ## Closing window manager-sessions
 
 **Openbox**
