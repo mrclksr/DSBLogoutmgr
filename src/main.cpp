@@ -48,9 +48,8 @@ static void execmd(const char *cmd);
 int
 main(int argc, char *argv[])
 {
-	int	      ch;
+	int	      bt, ch, lockfd;
 	char	      path_lock[PATH_MAX];
-	FILE	      *fp;
 	dsbcfg_t      *cfg;
 	const char    *cmds[6];
 	struct passwd *pw;
@@ -76,14 +75,12 @@ main(int argc, char *argv[])
 	(void)snprintf(path_lock, sizeof(path_lock), "%s/%s", pw->pw_dir,
 	    PATH_LOCK);
 	endpwent();
-	if ((fp = fopen(path_lock, "r+")) == NULL) {
-		if (errno != ENOENT || (fp = fopen(path_lock, "w+")) == NULL)
-			qh_err(0, EXIT_FAILURE, "fopen(%s)", path_lock);
-	}
-	if (lockf(fileno(fp), F_TLOCK, 0) == -1) {
+	if ((lockfd = open(path_lock, O_WRONLY | O_CREAT, 0600)) == -1)
+		qh_err(0, EXIT_FAILURE, "open(%s)", path_lock);
+	if (flock(lockfd, LOCK_EX | LOCK_NB) == -1) {
 		if (errno == EWOULDBLOCK)
 			exit(EXIT_SUCCESS);
-                qh_err(0, EXIT_FAILURE, "lockf()");
+		qh_err(0, EXIT_FAILURE, "flock()");
 	}
 	cmds[LOCK]     = dsbcfg_getval(cfg, CFG_LOCK).string;
 	cmds[LOGOUT]   = dsbcfg_getval(cfg, CFG_LOGOUT).string;
@@ -117,9 +114,10 @@ main(int argc, char *argv[])
 	Mainwin *w  = new Mainwin(bg);
 
 	while (w->exec() == QDialog::Accepted) {
-		if (w->getButton() != TIMER)
+		bt = w->getButton();
+		if (bt != TIMER)
 			delete(bg);
-		switch (w->getButton()) {
+		switch (bt) {
 		case LOCK:
 			execmd(cmds[LOCK]);
 			break;
