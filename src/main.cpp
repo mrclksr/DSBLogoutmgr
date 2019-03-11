@@ -48,7 +48,7 @@ static void execmd(const char *cmd);
 int
 main(int argc, char *argv[])
 {
-	int	      ch, lockfd;
+	int	      bt, ch, lockfd;
 	char	      path_lock[PATH_MAX];
 	dsbcfg_t      *cfg;
 	const char    *cmds[6];
@@ -114,9 +114,10 @@ main(int argc, char *argv[])
 	Mainwin *w  = new Mainwin(bg);
 
 	while (w->exec() == QDialog::Accepted) {
-		if (w->getButton() != TIMER)
+		bt = w->getButton();
+		if (bt != TIMER)
 			delete(bg);
-		switch (w->getButton()) {
+		switch (bt) {
 		case LOCK:
 			execmd(cmds[LOCK]);
 			break;
