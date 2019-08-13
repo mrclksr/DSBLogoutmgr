@@ -24,6 +24,8 @@
 
 #include <QTimer>
 #include <QStyle>
+#include <QScreen>
+#include <QRect>
 #include <QDesktopWidget>
 
 #include "icons.h"
@@ -36,6 +38,7 @@ Countdown::Countdown(int hours, int minutes, QWidget *parent)
 {
 	int secondsLeft = hours * 60 * 60 + minutes * 60;
 
+	trayIcon     = 0;
 	doShutdown   = false;
 	shutdownTime = time(NULL) + secondsLeft;
 
@@ -43,11 +46,11 @@ Countdown::Countdown(int hours, int minutes, QWidget *parent)
 	QIcon okIcon   = qh_loadStockIcon(QStyle::SP_DialogOkButton, 0);
 	QIcon chgIcon  = qh_loadIcon(ICONS_TIMER);
 	QIcon pic      = qh_loadIcon(ICONS_TIMER);
-	QIcon tIcon    = pic;
+	tIcon          = pic;
 
 	label		    = new QLabel("");
 	timer		    = new QTimer(this);
-	trayIcon	    = new QSystemTrayIcon(tIcon, this);
+	trayTimer	    = new QTimer(this);
 	QLabel	    *icon   = new QLabel;
 	QHBoxLayout *hbox   = new QHBoxLayout;
 	QHBoxLayout *btHbox = new QHBoxLayout;
@@ -56,9 +59,6 @@ Countdown::Countdown(int hours, int minutes, QWidget *parent)
 	QPushButton *ok	    = new QPushButton(okIcon, tr("Ok"));
 	QPushButton *edit   = new QPushButton(chgIcon, tr("Change timer"));
 
-	setLabelText(hours, minutes);
-	trayIcon->setToolTip(label->text());
-	icon->setPixmap(pic.pixmap(72));
 	setWindowIcon(tIcon);
 
 	hbox->setSpacing(20);
@@ -67,17 +67,15 @@ Countdown::Countdown(int hours, int minutes, QWidget *parent)
 
 	btHbox->setSpacing(2);
 	btHbox->addWidget(edit, 0, Qt::AlignLeft);
-	btHbox->addWidget(ok, 1, Qt::AlignRight);
 	btHbox->addWidget(cancel, 0, Qt::AlignRight);
+	btHbox->addWidget(ok, 1, Qt::AlignRight);
 
 	layout->setSpacing(10);
 	layout->addLayout(hbox);
 	layout->addLayout(btHbox);
 	layout->setContentsMargins(15, 15, 15, 15);
 
-	connect(trayIcon,
-	    SIGNAL(activated(QSystemTrayIcon::ActivationReason)), this,
-	    SLOT(trayClicked(QSystemTrayIcon::ActivationReason)));
+	connect(trayTimer, SIGNAL(timeout()), this, SLOT(checkForSysTray()));
 	connect(timer, SIGNAL(timeout()), this, SLOT(update()));
 	connect(ok, SIGNAL(clicked()), this, SLOT(hideWin()));
 	connect(cancel, SIGNAL(clicked()), this, SLOT(reject()));
@@ -86,7 +84,18 @@ Countdown::Countdown(int hours, int minutes, QWidget *parent)
 		timer->start(1000);
 	else
 		timer->start(60000);
-	trayIcon->show();
+	trayTimer->start(500);
+
+	connect(QGuiApplication::primaryScreen(),
+	    SIGNAL(geometryChanged(const QRect &)), this,
+	    SLOT(scrGeomChanged(const QRect &)));
+}
+
+void
+Countdown::scrGeomChanged(const QRect &g)
+{
+	Q_UNUSED(g);
+	trayTimer->start(500);
 }
 
 void Countdown::setLabelText(int hours, int minutes, int seconds)
@@ -135,6 +144,38 @@ void Countdown::closeEvent(QCloseEvent *event)
 	event->ignore();
 }
 
+void Countdown::checkForSysTray()
+{
+	static int tries = 60;
+
+	if (trayIcon != 0) {
+		tries = 60;
+		delete trayIcon;
+		trayIcon = 0;
+	}
+	if (QSystemTrayIcon::isSystemTrayAvailable()) {
+		trayTimer->stop();
+		createTrayIcon();
+	} else if (tries-- <= 0) {
+		trayTimer->stop();
+		show();
+	}
+}
+
+void Countdown::createTrayIcon()
+{
+	if (trayIcon != 0)
+		return;
+	if (!QSystemTrayIcon::isSystemTrayAvailable())
+		return;
+	trayIcon = new QSystemTrayIcon(this);
+	trayIcon->setIcon(tIcon);
+	update();
+	trayIcon->show();
+	connect(trayIcon, SIGNAL(activated(QSystemTrayIcon::ActivationReason)),
+	    this, SLOT(trayClicked(QSystemTrayIcon::ActivationReason)));
+}
+
 void Countdown::trayClicked(QSystemTrayIcon::ActivationReason reason)
 {
 	if (reason == QSystemTrayIcon::Trigger || 
@@ -162,12 +203,14 @@ void Countdown::update()
 	if (secondsLeft <= 60 && secondsLeft > 0) {
 		timer->start(1000);
 		setLabelText(0, 0, secondsLeft);
-		trayIcon->setToolTip(label->text());
+		if (trayIcon != 0)
+			trayIcon->setToolTip(label->text());
 	} else if (secondsLeft > 0) {
 		int hours = secondsLeft / (60 * 60);
 		int minutes = (secondsLeft - hours * 60 * 60) / 60;
 		setLabelText(hours, minutes);
-		trayIcon->setToolTip(label->text());
+		if (trayIcon != 0)
+			trayIcon->setToolTip(label->text());
 	}
 	if (secondsLeft <= 0) {
 		doShutdown = true;

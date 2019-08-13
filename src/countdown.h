@@ -43,6 +43,7 @@ public:
 	bool shutdown();
 private:
 	void setLabelText(int hours, int minutes, int seconds = 0);
+	void createTrayIcon();
 private slots:
 	void update();
 	void hideWin();
@@ -50,10 +51,14 @@ private slots:
 	void trayClicked(QSystemTrayIcon::ActivationReason reason);
 	void closeEvent(QCloseEvent *event);
 	void keyPressEvent(QKeyEvent *e);
+	void checkForSysTray();
+	void scrGeomChanged(const QRect &);
 private:
 	bool   doShutdown;
 	time_t shutdownTime;
+	QIcon  tIcon;
 	QTimer *timer;
+	QTimer *trayTimer;
 	QLabel *label;
 	QSystemTrayIcon *trayIcon;
 };
