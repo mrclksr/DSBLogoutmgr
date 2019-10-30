@@ -31,7 +31,9 @@
 #define	ICONS_LOGOUT	"system-log-out",	\
 			NULL
 
-#define ICONS_TIMER	"alarm-symbolic",	\
+#define ICONS_TIMER	"alarm-clock",		\
+			"alarm",		\
+			"alarm-symbolic",	\
 			"appointment-soon",	\
 			"timer",		\
 			"clock",		\
