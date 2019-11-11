@@ -184,7 +184,7 @@ void Countdown::trayClicked(QSystemTrayIcon::ActivationReason reason)
 			show();
 			setGeometry(QStyle::alignedRect(Qt::LeftToRight,
 			    Qt::AlignCenter, size(),
-			    qApp->desktop()->availableGeometry()));
+			    qApp->primaryScreen()->geometry()));
 			setVisible(true);
 		} else
 			setVisible(false);

@@ -34,7 +34,6 @@
 
 BgWin::BgWin(QWidget *parent) : QMainWindow(parent) {
 	QList <QScreen *> screens = QGuiApplication::screens();
-	int primary = QApplication::desktop()->primaryScreen();
 
 	for (int i = 0; i < screens.size(); i++) {
 		QRect g = screens.at(i)->geometry();
@@ -52,7 +51,7 @@ BgWin::BgWin(QWidget *parent) : QMainWindow(parent) {
 		QLabel *content = new QLabel(this);
 		content->setPixmap(pixmap);
 		content->move(QPoint(g.topLeft().rx(), g.topLeft().ry()));
-		if (i == primary)
+		if (i == 0)
 			setCentralWidget(content);
 		content->setWindowFlags(Qt::Window | Qt::FramelessWindowHint |
 		    Qt::WindowStaysOnTopHint);

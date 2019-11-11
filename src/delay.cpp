@@ -24,6 +24,7 @@
 
 #include <QTimer>
 #include <QStyle>
+#include <QScreen>
 #include <QDesktopWidget>
 
 #include "icons.h"
@@ -74,7 +75,7 @@ Delay::Delay(int seconds, const QString &actionName, const QString &text,
 	    Qt::WindowStaysOnTopHint | Qt::BypassWindowManagerHint);
 	show();
 	setGeometry(QStyle::alignedRect(Qt::LeftToRight, Qt::AlignCenter,
-	    parent->size(), qApp->desktop()->availableGeometry()));
+	    parent->size(), qApp->primaryScreen()->geometry()));
 	timer->start(1000);
 }
 
