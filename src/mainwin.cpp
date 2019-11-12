@@ -24,6 +24,7 @@
 #include <QStyle>
 #include <QDesktopWidget>
 #include <QWindow>
+#include <QScreen>
 #include "icons.h"
 #include "mainwin.h"
 #include "bgwin.h"
@@ -97,7 +98,7 @@ Mainwin::Mainwin(QWidget *parent) : QDialog(parent)
 	    Qt::WindowStaysOnTopHint | Qt::BypassWindowManagerHint);
 	show();
 	setGeometry(QStyle::alignedRect(Qt::LeftToRight, Qt::AlignCenter,
-	    size(), qApp->desktop()->availableGeometry()));
+	    size(), qApp->primaryScreen()->geometry()));
 }
 
 void Mainwin::logoutClicked()

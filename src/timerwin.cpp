@@ -23,6 +23,7 @@
  */
 #include <QStyle>
 #include <QDesktopWidget>
+#include <QScreen>
 
 #include "icons.h"
 #include "timerwin.h"
@@ -88,7 +89,7 @@ Timerwin::Timerwin(QWidget *parent) : QDialog(parent)
 	}
 	show();
 	setGeometry(QStyle::alignedRect(Qt::LeftToRight, Qt::AlignCenter,
-	    size(), qApp->desktop()->availableGeometry()));
+	    size(), qApp->primaryScreen()->geometry()));
 }
 
 void Timerwin::setTimer()

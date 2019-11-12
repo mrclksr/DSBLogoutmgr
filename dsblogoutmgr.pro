@@ -11,7 +11,7 @@ isEmpty(DATADIR) {
 QT	    += widgets
 TEMPLATE     = app
 TARGET	     = $${PROGRAM}
-LANGUAGES    = de
+TRANSLATIONS = locale/$${PROGRAM}_de.ts
 PATH_LOCK    = .$${PROGRAM}.lock
 INCLUDEPATH += . lib
 DEFINES     += PROGRAM=\\\"$${PROGRAM}\\\" LOCALE_PATH=\\\"$${DATADIR}\\\"
@@ -44,15 +44,15 @@ locales.path = $${DATADIR}
 target.path  = $${PREFIX}/bin
 target.files = $${PROGRAM}
 
-readme.target = readme
-readme.files = readme.mdoc
+readme.target	= readme
+readme.files	= readme.mdoc
 readme.commands = mandoc -mdoc readme.mdoc | perl -e \'foreach (<STDIN>) { \
 		\$$_ =~ s/(.)\x08\1/\$$1/g; \$$_ =~ s/_\x08(.)/\$$1/g; \
 		print \$$_ \
 	}\' | sed \'1,1d; \$$,\$$d\' > README
 
 readmemd.target = readmemd
-readmemd.files = readme.mdoc
+readmemd.files	= readme.mdoc
 readmemd.commands = mandoc -mdoc -Tmarkdown readme.mdoc | \
 			sed -e \'1,1d; \$$,\$$d\' > README.md
 
@@ -60,14 +60,10 @@ man.path  = $${PREFIX}/man/man1
 man.files = $${PROGRAM}.1
 
 qtPrepareTool(LRELEASE, lrelease)
-for(a, LANGUAGES) {
-	in = locale/$${PROGRAM}_$${a}.ts
-	out = locale/$${PROGRAM}_$${a}.qm
-	locales.files += $$out
-	cmd = $$LRELEASE $$in -qm $$out
+for(a, TRANSLATIONS) {
+	cmd = $$LRELEASE $${a}
 	system($$cmd)
 }
-
+locales.files	 += locale/*.qm
 cleanqm.commands  = rm -f $${locales.files}
 distclean.depends = cleanqm
-

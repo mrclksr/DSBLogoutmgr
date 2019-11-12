@@ -136,15 +136,16 @@ main(int argc, char *argv[])
 		case TIMER:
 			Timerwin *tw = new Timerwin(bg);
 			if (tw->exec() == QDialog::Accepted) {
+				int hours   = tw->getHours();
+				int minutes = tw->getMinutes();
 				delete(bg);
-				Countdown *c = new Countdown(tw->getHours(),
-				    tw->getMinutes());
+				Countdown *c = new Countdown(hours, minutes);
 				app.exec();
 				if (c->shutdown())
 					execmd(cmds[SHUTDOWN]);
 				return (EXIT_SUCCESS);
-			}
-			delete(tw);
+			} else
+				delete(tw);
 			break;
 		}
 	}
