@@ -11,7 +11,8 @@ isEmpty(DATADIR) {
 QT	    += widgets
 TEMPLATE     = app
 TARGET	     = $${PROGRAM}
-TRANSLATIONS = locale/$${PROGRAM}_de.ts
+TRANSLATIONS = locale/$${PROGRAM}_de.ts \
+               locale/$${PROGRAM}_fr.ts
 PATH_LOCK    = .$${PROGRAM}.lock
 INCLUDEPATH += . lib
 DEFINES     += PROGRAM=\\\"$${PROGRAM}\\\" LOCALE_PATH=\\\"$${DATADIR}\\\"
