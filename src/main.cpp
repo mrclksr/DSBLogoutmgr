@@ -31,6 +31,7 @@
 #include <unistd.h>
 #include <errno.h>
 #include <pwd.h>
+#include <err.h>
 #include <QApplication>
 #include <QLocale>
 #include <QTranslator>
@@ -42,14 +43,18 @@
 #include "qt-helper/qt-helper.h"
 #include "config.h"
 
+#define PATH_FIFO "." PROGRAM ".fifo"
+
 static void usage(void);
 static void execmd(const char *cmd);
+static void cleanup(void);
+
+static char path_fifo[PATH_MAX];
 
 int
 main(int argc, char *argv[])
 {
-	int	      bt, ch, lockfd;
-	char	      path_lock[PATH_MAX];
+	int	      bt, ch, fifo;
 	dsbcfg_t      *cfg;
 	const char    *cmds[6];
 	struct passwd *pw;
@@ -69,19 +74,6 @@ main(int argc, char *argv[])
 	} else if (cfg == NULL)
 		qh_errx(0, EXIT_FAILURE, "%s", dsbcfg_strerror());
 
-	if ((pw = getpwuid(getuid())) == NULL)
-		qh_err(0, EXIT_FAILURE, "getpwuid()");
-	/* Check if another instance is already running. */
-	(void)snprintf(path_lock, sizeof(path_lock), "%s/%s", pw->pw_dir,
-	    PATH_LOCK);
-	endpwent();
-	if ((lockfd = open(path_lock, O_WRONLY | O_CREAT, 0600)) == -1)
-		qh_err(0, EXIT_FAILURE, "open(%s)", path_lock);
-	if (flock(lockfd, LOCK_EX | LOCK_NB) == -1) {
-		if (errno == EWOULDBLOCK)
-			exit(EXIT_SUCCESS);
-		qh_err(0, EXIT_FAILURE, "flock()");
-	}
 	cmds[LOCK]     = dsbcfg_getval(cfg, CFG_LOCK).string;
 	cmds[LOGOUT]   = dsbcfg_getval(cfg, CFG_LOGOUT).string;
 	cmds[REBOOT]   = dsbcfg_getval(cfg, CFG_REBOOT).string;
@@ -110,6 +102,30 @@ main(int argc, char *argv[])
 			usage();
 		}
 	}
+	if ((pw = getpwuid(getuid())) == NULL)
+		qh_err(0, EXIT_FAILURE, "getpwuid()");
+	endpwent();
+		(void)snprintf(path_fifo, sizeof(path_fifo), "%s/%s", pw->pw_dir,
+	    PATH_FIFO);
+	endpwent();
+	if (mkfifo(path_fifo, S_IWUSR | S_IRUSR) == -1 && errno != EEXIST)
+		err(EXIT_FAILURE, "mkfifo()");
+	(void)chmod(path_fifo, S_IRUSR | S_IWUSR);
+	if ((fifo = open(path_fifo, O_WRONLY | O_NONBLOCK)) != -1) {
+		(void)write(fifo, "x", 1);
+		exit(EXIT_SUCCESS);
+	} else {
+		/*
+		 * Open the FIFO for reading and writing to prevent select()
+		 * from returning with a value > 0 if the last writer has
+		 * closed its end.
+		 */
+		(void)close(fifo);
+		if ((fifo = open(path_fifo, O_RDWR | O_NONBLOCK)) == -1)
+			err(1, "open(%s)", path_fifo);
+	}
+	(void)atexit(cleanup);
+
 	BgWin   *bg = new BgWin();
 	Mainwin *w  = new Mainwin(bg);
 
@@ -139,7 +155,8 @@ main(int argc, char *argv[])
 				int hours   = tw->getHours();
 				int minutes = tw->getMinutes();
 				delete(bg);
-				Countdown *c = new Countdown(hours, minutes);
+				Countdown *c = new Countdown(hours, minutes,
+							     fifo);
 				app.exec();
 				if (c->shutdown())
 					execmd(cmds[SHUTDOWN]);
@@ -169,6 +186,12 @@ execmd(const char *cmd)
 	qh_errx(0, EXIT_FAILURE,
 	    QObject::tr("Command '%s' exited with code %d").toLocal8Bit().data(),
 	    cmd, (error >> 8));
+}
+
+static void
+cleanup()
+{
+	(void)unlink(path_fifo);
 }
 
 static void

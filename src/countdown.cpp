@@ -27,17 +27,18 @@
 #include <QScreen>
 #include <QRect>
 #include <QDesktopWidget>
+#include <QSocketNotifier>
+#include <unistd.h>
 
 #include "icons.h"
 #include "countdown.h"
 #include "timerwin.h"
 #include "qt-helper/qt-helper.h"
 
-Countdown::Countdown(int hours, int minutes, QWidget *parent)
+Countdown::Countdown(int hours, int minutes, int fifo, QWidget *parent)
 	: QDialog(parent)
 {
 	int secondsLeft = hours * 60 * 60 + minutes * 60;
-
 	trayIcon     = 0;
 	doShutdown   = false;
 	shutdownTime = time(NULL) + secondsLeft;
@@ -58,7 +59,8 @@ Countdown::Countdown(int hours, int minutes, QWidget *parent)
 	QPushButton *cancel = new QPushButton(cnclIcon, tr("Cancel timer"));
 	QPushButton *ok	    = new QPushButton(okIcon, tr("Ok"));
 	QPushButton *edit   = new QPushButton(chgIcon, tr("Change timer"));
-
+	QSocketNotifier	*snFIFO	= new QSocketNotifier(fifo,
+					QSocketNotifier::Read, this);
 	setWindowIcon(tIcon);
 
 	hbox->setSpacing(20);
@@ -89,6 +91,7 @@ Countdown::Countdown(int hours, int minutes, QWidget *parent)
 	connect(QGuiApplication::primaryScreen(),
 	    SIGNAL(geometryChanged(const QRect &)), this,
 	    SLOT(scrGeomChanged(const QRect &)));
+	connect(snFIFO, SIGNAL(activated(int)), this, SLOT(handleFIFO(int)));
 }
 
 void
@@ -189,6 +192,13 @@ void Countdown::trayClicked(QSystemTrayIcon::ActivationReason reason)
 		} else
 			setVisible(false);
 	}
+}
+
+void Countdown::handleFIFO(int fifo)
+{
+	char c;
+	(void)read(fifo, &c, 1);
+	show();
 }
 
 bool Countdown::shutdown()

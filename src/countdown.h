@@ -39,7 +39,7 @@ class Countdown : public QDialog
 {
 	Q_OBJECT
 public:
-	Countdown(int hours, int minutes, QWidget *parent = 0);
+	Countdown(int hours, int minutes, int fifo, QWidget *parent = 0);
 	bool shutdown();
 private:
 	void setLabelText(int hours, int minutes, int seconds = 0);
@@ -48,6 +48,7 @@ private slots:
 	void update();
 	void hideWin();
 	void changeTimer();
+	void handleFIFO(int fifo);
 	void trayClicked(QSystemTrayIcon::ActivationReason reason);
 	void closeEvent(QCloseEvent *event);
 	void keyPressEvent(QKeyEvent *e);
