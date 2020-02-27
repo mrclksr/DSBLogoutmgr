@@ -1,12 +1,12 @@
 <?xml version="1.0" encoding="utf-8"?>
 <!DOCTYPE TS>
-<TS version="2.1" language="de_DE">
+<TS version="2.1" language="fr_FR">
 <context>
     <name>Countdown</name>
     <message>
         <location filename="../src/countdown.cpp" line="58"/>
         <source>Cancel timer</source>
-        <translation>Timer abbrechen</translation>
+        <translation>Annuler le compteur</translation>
     </message>
     <message>
         <location filename="../src/countdown.cpp" line="59"/>
@@ -16,41 +16,41 @@
     <message>
         <location filename="../src/countdown.cpp" line="60"/>
         <source>Change timer</source>
-        <translation>Timer ändern</translation>
+        <translation>Modifier le compteur</translation>
     </message>
     <message>
         <location filename="../src/countdown.cpp" line="106"/>
         <location filename="../src/countdown.cpp" line="117"/>
         <location filename="../src/countdown.cpp" line="122"/>
         <source>Shutdown in %1 %2</source>
-        <translation></translation>
+        <translation>Arrêt dans %1 %2</translation>
     </message>
     <message>
         <location filename="../src/countdown.cpp" line="108"/>
         <source>Second</source>
-        <translation>Sekunde</translation>
+        <translation>Seconde</translation>
     </message>
     <message>
         <location filename="../src/countdown.cpp" line="108"/>
         <source>Seconds</source>
-        <translation>Sekunden</translation>
+        <translation>Secondes</translation>
     </message>
     <message>
         <location filename="../src/countdown.cpp" line="111"/>
         <source>Shutdown in %1 %2 %3 %4</source>
-        <translation></translation>
+        <translation>Arrêt dans %1 %2 %3 %4</translation>
     </message>
     <message>
         <location filename="../src/countdown.cpp" line="113"/>
         <location filename="../src/countdown.cpp" line="119"/>
         <source>Hour</source>
-        <translation>Stunde</translation>
+        <translation>Heure</translation>
     </message>
     <message>
         <location filename="../src/countdown.cpp" line="113"/>
         <location filename="../src/countdown.cpp" line="119"/>
         <source>Hours</source>
-        <translation>Stunden</translation>
+        <translation>Heures</translation>
     </message>
     <message>
         <location filename="../src/countdown.cpp" line="115"/>
@@ -62,7 +62,7 @@
         <location filename="../src/countdown.cpp" line="115"/>
         <location filename="../src/countdown.cpp" line="124"/>
         <source>Minutes</source>
-        <translation>Minuten</translation>
+        <translation>Minutes</translation>
     </message>
 </context>
 <context>
@@ -70,17 +70,17 @@
     <message>
         <location filename="../src/delay.cpp" line="48"/>
         <source>Cancel</source>
-        <translation>Abbrechen</translation>
+        <translation>Annuler</translation>
     </message>
     <message>
         <location filename="../src/delay.cpp" line="89"/>
         <source>second</source>
-        <translation>Sekunde</translation>
+        <translation>seconde</translation>
     </message>
     <message>
         <location filename="../src/delay.cpp" line="89"/>
         <source>seconds</source>
-        <translation>Sekunden</translation>
+        <translation>secondes</translation>
     </message>
 </context>
 <context>
@@ -88,67 +88,67 @@
     <message>
         <location filename="../src/mainwin.cpp" line="52"/>
         <source>Timer</source>
-        <translation></translation>
+        <translation>Compteur</translation>
     </message>
     <message>
         <location filename="../src/mainwin.cpp" line="53"/>
         <location filename="../src/mainwin.cpp" line="106"/>
         <source>Logout</source>
-        <translation>Abmelden</translation>
+        <translation>Déconnexion</translation>
+    </message>
+    <message>
+        <location filename="../src/mainwin.cpp" line="54"/>
+        <source>Cancel</source>
+        <translation>Annuler</translation>
     </message>
     <message>
         <location filename="../src/mainwin.cpp" line="56"/>
         <location filename="../src/mainwin.cpp" line="151"/>
         <source>Lock screen</source>
-        <translation>Bildschirm sperren</translation>
+        <translation>Vérrouiller l&apos;écran</translation>
     </message>
     <message>
         <location filename="../src/mainwin.cpp" line="58"/>
         <location filename="../src/mainwin.cpp" line="115"/>
         <source>Reboot system</source>
-        <translation>Neustart</translation>
+        <translation>Redémarrer le système</translation>
     </message>
     <message>
         <location filename="../src/mainwin.cpp" line="60"/>
         <location filename="../src/mainwin.cpp" line="125"/>
         <source>Shutdown system</source>
-        <translation>Herunterfahren</translation>
+        <translation>Arrêter le système</translation>
     </message>
     <message>
         <location filename="../src/mainwin.cpp" line="62"/>
         <location filename="../src/mainwin.cpp" line="135"/>
         <source>Suspend system</source>
-        <translation>Ruhemodus</translation>
+        <translation>Mettre en veille le système</translation>
     </message>
     <message>
         <location filename="../src/mainwin.cpp" line="106"/>
         <source>Logging out in</source>
-        <translation>Abmelden in</translation>
+        <translation>Déconnexion dans</translation>
     </message>
     <message>
         <location filename="../src/mainwin.cpp" line="115"/>
         <source>Rebooting in</source>
-        <translation>Neustart in</translation>
+        <translation>Redémarrage dans</translation>
     </message>
     <message>
         <location filename="../src/mainwin.cpp" line="125"/>
         <source>Shutting down in</source>
-        <translation>Herunterfahren in</translation>
+        <translation>Arrêt dans</translation>
     </message>
     <message>
         <location filename="../src/mainwin.cpp" line="135"/>
         <source>Suspending system in</source>
-        <translation>Ruhemodus in</translation>
+        <translation>Mise en veille dans</translation>
     </message>
     <message>
         <location filename="../src/mainwin.cpp" line="151"/>
         <source>Locking screen in</source>
-        <translation>Sperre Bildschirm in</translation>
-    </message>
-    <message>
-        <location filename="../src/mainwin.cpp" line="54"/>
-        <source>Cancel</source>
-        <translation>Abbrechen</translation>
+        <translation>Vérrouillage de l&apos;écran dans</translation>
     </message>
 </context>
 <context>
@@ -156,12 +156,12 @@
     <message>
         <location filename="../src/main.cpp" line="166"/>
         <source>Command &apos;%s&apos; not found</source>
-        <translation>Befehl &apos;%s&apos; nicht gefunden</translation>
+        <translation>Commande &apos;%s&apos; introuvable</translation>
     </message>
     <message>
         <location filename="../src/main.cpp" line="170"/>
         <source>Command &apos;%s&apos; exited with code %d</source>
-        <translation>Befehl &apos;%s&apos; mit Fehlercode %d beendet</translation>
+        <translation>La commande &apos;%s&apos; a retourné le code %d</translation>
     </message>
 </context>
 <context>
@@ -169,7 +169,7 @@
     <message>
         <location filename="../src/timerwin.cpp" line="42"/>
         <source>Set shutdown time in hours and/or minutes:</source>
-        <translation>Setze Shutdown-Timer in Stunden und/oder Minuten:</translation>
+        <translation>Définir le compteur d&apos;arrêt en heures et/ou minutes:</translation>
     </message>
     <message>
         <location filename="../src/timerwin.cpp" line="49"/>
@@ -179,17 +179,17 @@
     <message>
         <location filename="../src/timerwin.cpp" line="50"/>
         <source>&amp;Cancel</source>
-        <translation>&amp;Abbrechen</translation>
+        <translation>&amp;Cancel</translation>
     </message>
     <message>
         <location filename="../src/timerwin.cpp" line="53"/>
         <source> Hours</source>
-        <translation> Stunden</translation>
+        <translation> Heures</translation>
     </message>
     <message>
         <location filename="../src/timerwin.cpp" line="54"/>
         <source> Minutes</source>
-        <translation> Minuten</translation>
+        <translation> Minutes</translation>
     </message>
 </context>
 </TS>
