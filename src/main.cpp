@@ -66,6 +66,10 @@ main(int argc, char *argv[])
 	    QLatin1String("_"), QLatin1String(LOCALE_PATH)))
 		app.installTranslator(&translator);
 
+	/* Set application name and RESOURCE_NAME env to set WM_CLASS */
+	QApplication::setApplicationName(PROGRAM);
+	(void)qputenv("RESOURCE_NAME", PROGRAM);
+
 	cfg = dsbcfg_read(PROGRAM, "config", vardefs, CFG_NVARS);
 	if (cfg == NULL && errno == ENOENT) {
 		cfg = dsbcfg_new(NULL, vardefs, CFG_NVARS);
